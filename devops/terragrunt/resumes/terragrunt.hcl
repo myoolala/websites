@@ -1,5 +1,5 @@
 terraform {
-  source = "${get_terragrunt_dir()}/../..//terraform/modules/resume"
+  source = "${get_terragrunt_dir()}/../..//terraform/modules/website"
 }
 
 locals {
@@ -16,9 +16,10 @@ inputs = {
   listener_arn = dependency.shared.outputs.listener_arn
   code_bucket = dependency.shared.outputs.code_bucket
   lb_dns_name = dependency.shared.outputs.lb_dns_name
+  group = "resume"
   dns = {
       hosted_zone = local.secrets.hosted_zone
-      domain = "resume.petergrasso.com"
+      domain = local.secrets.domain
   }
 }
 

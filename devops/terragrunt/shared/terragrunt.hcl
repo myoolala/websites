@@ -10,6 +10,7 @@ locals {
 # Indicate the input values to use for the variables of the module.
 inputs = {
     hosted_zone = local.secrets.hosted_zone
+    domain = local.secrets.domain
 }
 
 remote_state {

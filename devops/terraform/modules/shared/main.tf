@@ -3,6 +3,11 @@ variable "hosted_zone" {
   description = "Hosted Zone ID to route traffic with"
 }
 
+variable "domain" {
+  type = string
+  description = "Default domain to deploy to"
+}
+
 module "vpc" {
   source = "github.com/myoolala/terraform-aws/modules//vpc?ref=main"
 
@@ -40,14 +45,14 @@ module "code_bucket" {
 module "cert" {
   source = "github.com/myoolala/terraform-aws//modules/cert?ref=main"
 
-  domain      = "www.petergrasso.com"
+  domain      = "${var.domain}"
   hosted_zone = var.hosted_zone
   private     = false
 }
 
 resource "aws_route53_record" "cname" {
   zone_id = var.hosted_zone
-  name    = "www.petergrasso.com"
+  name    = "${var.domain}"
   type    = "CNAME"
   ttl     = 300
   records = [module.ingress.dns_name]
@@ -72,6 +77,29 @@ module "ingress" {
     cert         = module.cert.arn
     target_type  = "lambda"
   }]
+}
+
+
+module "ui_lambda" {
+  source = "github.com/myoolala/terraform-aws/modules//lambda-s3-ui?ref=main"
+
+  lambda_name = "petergrasso-personal-proxy"
+  config = {
+    log_level = "WARN"
+    bucket     = module.code_bucket.id
+    prefix     = "/personal/"
+    enable_spa = false
+  }
+
+  # sg_config = {
+  #   create = true
+  #   vpc_id = module.vpc.vpc_id
+  # }
+  # vpc_config = {
+  #   subnets = module.vpc.compute_subnet_ids
+  # }
+  vpc_config = null
+  alb_tg_arn = module.ingress.tg_arns[0]
 }
 
 output "lb_dns_name" {

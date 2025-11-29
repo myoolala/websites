@@ -20,7 +20,7 @@ resource "aws_lb_listener_certificate" "this" {
 }
 
 resource "aws_lb_target_group" "forwarder" {
-  name        = "petergrasso-resume"
+  name        = "petergrasso-${var.group}"
   target_type = "lambda"
 }
 
@@ -49,10 +49,11 @@ resource "aws_lb_listener_rule" "this" {
 module "ui_lambda" {
   source = "github.com/myoolala/terraform-aws/modules//lambda-s3-ui?ref=main"
 
-  lambda_name = "petergrasso-resume-proxy"
+  lambda_name = "petergrasso-${var.group}-proxy"
   config = {
+    log_level = "WARN"
     bucket     = var.code_bucket
-    prefix     = "/resume/"
+    prefix     = "/${var.group}/"
     enable_spa = false
   }
 

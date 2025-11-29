@@ -17,6 +17,11 @@ variable "lb_dns_name" {
   description = "CNAME to forward traffic to"
 }
 
+variable "group" {
+  type = string
+  description = "Group part of the deployment to use"
+}
+
 ########################################################################
 #############                   Optional                   #############
 ########################################################################
