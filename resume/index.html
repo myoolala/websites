@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Peter Grasso – Full-Stack Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0f1012;
+      --bg-elevated: #18191d;
+      --text: #f5f5f5;
+      --muted: #a0a3aa;
+      --accent: #2f80ed;
+      --border: #26272c;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 32px 16px 48px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 48px;
+    }
+
+    .hero-avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: radial-gradient(circle at 30% 20%, #3b3d46, #15161a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-avatar span {
+      font-size: 56px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    .hero-name {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero-role {
+      font-size: 20px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid var(--border);
+      background: #22232a;
+      color: var(--text);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease,
+        transform 0.1s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: #3b3c44;
+      background: #25262f;
+    }
+
+    .btn-primary:hover {
+      background: #3b82f6;
+      border-color: #3b82f6;
+    }
+
+    /* SECTIONS */
+    .section {
+      background: var(--bg-elevated);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      padding: 24px 24px 26px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .section p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* EXPERIENCE */
+    .experience-item,
+    .project-item {
+      margin-bottom: 18px;
+    }
+
+    .experience-item:last-child,
+    .project-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    .item-title {
+      font-weight: 600;
+    }
+
+    .item-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .item-dates {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .item-body {
+      margin-top: 6px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .item-body ul {
+      padding-left: 18px;
+      list-style: disc;
+    }
+
+    /* PROJECTS */
+    .project-name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 720px) {
+      body {
+        padding: 24px 16px 40px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        justify-items: flex-start;
+      }
+
+      .hero-name {
+        font-size: 32px;
+      }
+
+      .hero-avatar {
+        width: 120px;
+        height: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero-avatar">
+        <!-- Replace with your own photo if you like -->
+        <img src="./assets/portrait.jpg" alt="Peter Grasso" />
+      </div>
+
+      <div>
+        <h1 class="hero-name">Peter Grasso</h1>
+        <p class="hero-role">Full-Stack Developer</p>
+
+        <div class="hero-actions">
+          <a href="./assets/resume.pdf" class="btn btn-primary" download>
+            Download CV
+          </a>
+          <a href="mailto:petermgrasso@gmail.com" class="btn">
+            Contact
+          </a>
+          <a class="btn" href="https://www.credly.com/users/peter-grasso.d0929f0e/badges#credly" target="_blank">
+              Credley
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section class="section">
+      <h2 class="section-title">About</h2>
+      <p>
+        I am a full-stack developer with experience in building and maintaining
+        AWS cloud applications. In particular I have spent most of my career building
+        custom applications for niche applications. This also includes many migrations
+        from an on-prem environment to the cloud.
+      </p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section">
+      <h2 class="section-title">Experience</h2>
+
+      <div class="experience-item">
+        <div class="item-header">
+          <div>
+            <div class="item-title">AWS ProServe Partner</div>
+            <div class="item-subtitle">Red Alpha</div>
+          </div>
+          <div class="item-dates">August 2024 – Present</div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li>
+                Met with customer technical teams to gather information, requirements, document
+                capabilities, and features which all get incorporated into the final recommendation
+            </li>
+            <li>
+                Based on customer needs I tested cloud capabilities, like Kubernetes cloud
+                integrations, to determine what can meet the customer needs
+            </li>
+            <li>
+                Created cost estimated based on existing customer infrastructure to offer multiple
+                points of view with direct vs optimized migrations
+            </li>
+            <li>
+                Extended the cost estimates to include complete rewrites of systems focusing on
+                serverless methodologies.
+            </li>
+            <li>
+                Maintained file storage MVP example for the customer via serverless technologies like
+                lambda with Python deployed via CDK
+            </li>
+            <li>
+                Integrated all possible paths to migrate the customer to the cloud in a single
+                deliverable to maximize customer success
+            </li>
+            <li>
+                Composed cloud architecture options and evaluated which would be most effective for
+                the customer in terms of migration complexity, speed, infrastructure cost, and
+                capabilities
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Lead Cloud Engineer</div>
+            <div class="item-subtitle">Red Alpha</div>
+          </div>
+          <div class="item-dates">November 2022 – Present</div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li>
+                Architected, implemented, migrated, verified, and audited multiple system migrations
+               to AWS focused on resiliency, speed, and costs in that order.
+            </li>
+            <li>
+                Lead the design of an implementation of a serverless migration leading to a total AWS
+                bill of ~270 USD/mo for production scale 3 environments.
+            </li>
+            <li>
+                Designed and implemented a Cloud solution for a cost focused internally managed
+              OpenAi. Overall cost reached an average of $1/hr
+            </li>
+            <li>
+                Routinely ran cost audits and improved system maintenance via automating migrations,
+              integrating slack alerts, built system dashboards for non-technical leads, etc…
+            </li>
+            <li>
+                Built multiple CI/CD pipelines to automate deployments, migrations, alerts, and cache
+              busting for production systems.
+            </li>
+            <li>
+                Built a fully integrated Slack notification system via AWS EventBridge to automated
+                proactive notifications to the development team about potential issues, deployments,
+                and state of the system.
+            </li>
+            <li>
+                Designed an AWS authenticated shared terraform modules repo hosted in S3 to provide
+                authenticated access to select groups without the need for any additional
+                configuration.
+            </li>
+            <li>
+                Lead multiple system compliance initiatives to meet STIG standards, connect with ACAS
+                scans, meet ATO (authority to operate), and integrate with monitoring solutions such
+                as AlertLogic.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="experience-item">
+        <div class="item-header">
+          <div>
+            <div class="item-title">Technical Lead</div>
+            <div class="item-subtitle">Asymmetrik LTD</div>
+          </div>
+          <div class="item-dates">Jan 2016 – March 2022</div>
+        </div>
+        <div class="item-body">
+          <ul>
+            <li>Architected, executed, and validated contracts for multiple healthcare clients
+            simultaneously as the company’s lead healthcare engineer to maintain company
+            relationships</li>
+            <li>Upgraded and maintained a highly configurable public facing Find-A-Doc application to
+            drive patient engagement to book more effective appointments within an on-prem
+            scheduling system.</li>
+            <li>Migrated a healthcare client to a custom-built HIPAA compliant cloud based
+            infrastructure to house PHI and PII analytics used by their marketing division with 0
+            downtime.</li>
+            <li>Rapidly designed, built, audited, and deployed several COVID vaccine applications to
+            schedule tests and/or vaccinations from a publicly reachable form into a 30 year old
+            internal EHR system. Concept to HIPAA audited and deployed in one weekend.
+            <li>Helped maintain a large, 100s of TB of ~500B files, entirely event data highway in a
+            fully redundant to provide indexing, virus scanning, replay capability, and forwarding
+            of information.</li>
+            <li>Lead multiple milestones to updating the data highway. For example: Updating the
+            inventory index from a daily resync to a live update model.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section">
+      <h2 class="section-title">Projects</h2>
+
+      <div class="project-item">
+        <div class="project-name"><a href="https://github.com/myoolala/terraform-aws" target="_blank">OpenTofu modules for AWS</a></div>
+        <p class="item-body">
+          A collection of abstracted OpenTofu modules to solve my 95% use case for code. Things like an SNS topic with encryption setup, 
+          a fargate deployment with secrets management built in, or a completely lambda based full stack application.
+        </p>
+      </div>
+
+      <div class="project-item">
+        <div class="project-name"><a href="https://github.com/myoolala/react-starter" target="_blank">FullStack React Starter Repo</a></div>
+        <p class="item-body">
+          This repo provides an out of the box ready fullstack application with multiple deployment options available. The main goal is to provide
+          a generic nodejs/react application that can be deployed to multiple scales. Serverless, Fargate, or EC2.
+        </p>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="section">
+      <h2 class="section-title">Certifications</h2>
+
+      <div class="project-item">
+        <div class="project-name">AWS Certifications</div>
+        <p class="item-body">
+            <div>AWS Certified Solutions Architect – Professional</div>
+            <div>AWS Certified DevOps Engineer – Professional</div>
+            <div>AWS Certified Machine Learning – Specialty</div>
+            <div>AWS Certified Advanced Networking – Specialty</div>
+            <div>AWS Certified Security – Specialty</div>
+            <div>AWS Certified Solutions Architect – Associate</div>
+            <div>AWS Certified Machine Learning Engineer – Associate</div>
+            <div>AWS Certified Data Engineer – Associate</div>
+            <div>AWS Certified SysOps Administrator – Associate</div>
+            <div>AWS Certified Developer – Associate</div>
+            <div>AWS Certified AI Practitioner</div>
+            <div>AWS Certified Practitioner</div>
+        </p>
+      </div>
+
+      <div class="project-item">
+        <div class="project-name">Other Certifications</div>
+        <p class="item-body">
+          <div>HashiCorp Certified: Terraform Associate (003)</div>
+          <div>Google Cloud Digital Leader Certification</div>
+          <div>Comptia Security+ - Expires August 2026</div>
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
