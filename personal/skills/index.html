@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Skills</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #11161d;
+      color: #f5f5f5;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 2.7rem;
+      margin-bottom: 2rem;
+      letter-spacing: 0.03em;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+      font-family: Georgia, serif;
+      letter-spacing: 0.02em;
+    }
+
+    .section {
+      max-width: 900px;
+      background: #1c222c;
+      padding: 1.5rem 2rem;
+      margin: 0 auto 2rem auto;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    /* Image Placeholder (Left Side) */
+    .placeholder {
+      width: 220px;
+      height: 160px;
+      flex-shrink: 0;
+      background: #2d3644;
+      border: 2px dashed #556070;
+      border-radius: 10px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8fa0ff;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      line-height: 1.6rem;
+      font-size: 1.05rem;
+    }
+
+    ul li::before {
+      content: "• ";
+      color: #8fa0ff;
+    }
+
+    /* Hobby Cards */
+    .hobby-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: #252c38;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .card .placeholder {
+      margin: 0 auto 1rem auto;
+      width: 100%;
+      height: 130px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: #bfc4ce;
+      line-height: 1.35rem;
+    }
+
+    .back {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .back a {
+      color: #8fa0ff;
+      text-decoration: none;
+      font-size: 1.1rem;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>My Skills</h1>
+
+  <!-- Cloud & AWS Architecture -->
+  <div class="section">
+    <img width="320" src="../assets/ma-jacket.jpg"/>
+    <div>
+        <h2>Cloud & AWS Architecture</h2>
+        <ul>
+        <li>Designing scalable, highly available architectures on AWS (VPC, EC2, RDS, S3, Lambda, API Gateway).</li>
+        <li>Planning and executing cloud migration projects from on-prem or other clouds into AWS.</li>
+        <li>Modernizing legacy systems into microservices or serverless-first designs.</li>
+        <li>Implementing monitoring, logging, and cost-optimization strategies (CloudWatch, CloudTrail, budgets, tagging).</li>
+        <li>Infrastructure as Code with tools like AWS CloudFormation / Terraform and CI/CD pipelines.</li>
+        </ul>
+    </div>
+  </div>
+
+  <!-- Software & Technical Skills -->
+  <div class="section">
+    <img width="320" src="../assets/my-office.jpg"/>
+    <div>
+        <h2>Software & Technical Skills</h2>
+        <ul>
+        <li>Programming in languages such as JavaScript/TypeScript and Python for backend and tooling.</li>
+        <li>Building RESTful APIs and backend services, integrating with AWS services and third-party systems.</li>
+        <li>Working with relational and NoSQL databases, including schema design and performance tuning.</li>
+        <li>Building complete CI/CD systems to run database migrations, handle deployements, rollbacks, etc...</li>
+        <li>Version control and collaboration using Git and GitHub.</li>
+        </ul>
+    </div>
+  </div>
+
+  <!-- Automotive & Mechanical Skills -->
+  <div class="section">
+    <img width="320" src="../assets/my-car-8C.jpg"/>
+    <div>
+        <h2>Automotive & Mechanical Skills</h2>
+        <ul>
+        <li>Diagnosing and troubleshooting common automotive issues using both tools and research.</li>
+        <li>Performing routine maintenance: oil changes, brakes, filters, fluids, and fixing leaks.</li>
+        <li>Working on light modifications and upgrades such as suspension components, adjusting handling, and cooling systems.</li>
+        <li>Blown up several engines on track, including the one in the picture.</li>
+        <li>Installed several car lifts to accomadate this.</li>
+        </ul>
+    </div>
+  </div>
+
+  <!-- Handyman & DIY Skills -->
+  <div class="section">
+    <img width="320" src="../assets/my-purgola.jpg"/>
+      <div>
+        <h2>Handyman & DIY Skills</h2>
+        <ul>
+        <li>Tackling home improvement projects: shelving, building furniture, and floor replacement.</li>
+        <li>Light electrical and plumbing tasks within safe, residential limits (fixtures, faucets, etc.).</li>
+        <li>Drywall patching, painting, and general interior touch-ups.</li>
+        <li>Built multiple outdoor buildings and other fixtures.</li>
+        <li>Two friends and I built that purgola in under 2 days</li>
+        </ul>
+    </div>
+  </div>
+
+  <div class="back">
+    <a href="../">← Back to Home</a>
+  </div>
+
+</body>
+</html>
