@@ -266,9 +266,12 @@
       display: block;
     }
 
-    /* Right side: sidebar */
+    /* RIGHT SIDEBAR (STICKY) */
 
     .story-sidebar {
+      position: sticky;
+      top: 20px;
+      align-self: start;
       display: flex;
       flex-direction: column;
       gap: 16px;
@@ -417,6 +420,10 @@
       .story-layout {
         grid-template-columns: minmax(0, 1fr);
       }
+
+      .story-sidebar {
+        position: static; /* disable sticky on small screens */
+      }
     }
   </style>
 </head>
@@ -431,17 +438,17 @@
         </div>
       </div>
       <nav>
-        <a href="index.html">Home</a>
-        <a href="build.html">Car Build</a>
+        <a href="../../">Home</a>
+        <!-- <a href="build.html">Car Build</a>
         <a href="info.html">Platform Info</a>
         <a href="resources.html">Resources</a>
-        <a href="builds-stories.html">Builds &amp; Stories</a>
+        <a href="builds-stories.html">Builds &amp; Stories</a> -->
       </nav>
     </header>
 
     <main>
       <div class="breadcrumb">
-        <a href="builds-stories.html">Builds, Jobs &amp; Stories</a>
+        <a href="../">Builds, Jobs &amp; Stories</a>
         <span>›</span>
         <span>First mountain run with the new setup</span>
       </div>
@@ -461,7 +468,7 @@
       </header>
 
       <section class="story-layout">
-        <!-- Left: Narrative -->
+        <!-- LEFT: Narrative -->
         <article class="story-body">
           <div class="story-section-title">The day &amp; the drive</div>
           <p class="story-intro">
@@ -471,7 +478,6 @@
             sections of pavement.
           </p>
 
-          <!-- Block 1 -->
           <section class="story-block">
             <h2 class="story-block-title">Morning prep</h2>
             <div class="story-block-time">09:00 – Garage</div>
@@ -483,13 +489,10 @@
               than the last alignment day.
             </p>
             <div class="story-photo-inline">
-              <!-- Replace this with an <img> if you have one -->
-              <!-- <img src="images/story-morning-bay.jpg" alt="BMW in the garage before the drive" /> -->
               Optional photo: the car in the garage before heading out
             </div>
           </section>
 
-          <!-- Block 2 -->
           <section class="story-block">
             <h2 class="story-block-title">Highway out &amp; first impressions</h2>
             <div class="story-block-time">10:00 – Outbound highway</div>
@@ -506,7 +509,6 @@
             </div>
           </section>
 
-          <!-- Block 3 -->
           <section class="story-block">
             <h2 class="story-block-title">Into the twisties</h2>
             <div class="story-block-time">11:00 – Mountain section</div>
@@ -522,7 +524,6 @@
             </div>
           </section>
 
-          <!-- Block 4 -->
           <section class="story-block">
             <h2 class="story-block-title">Break at the overlook</h2>
             <div class="story-block-time">12:15 – Overlook pull-off</div>
@@ -539,7 +540,6 @@
             </div>
           </section>
 
-          <!-- Block 5 -->
           <section class="story-block">
             <h2 class="story-block-title">Return trip &amp; takeaways</h2>
             <div class="story-block-time">14:00 – Heading home</div>
@@ -557,9 +557,8 @@
           </section>
         </article>
 
-        <!-- Right: Sidebar -->
+        <!-- RIGHT: Sticky sidebar -->
         <aside class="story-sidebar">
-          <!-- Trip summary -->
           <section class="card">
             <h2 class="card-title">Trip summary</h2>
             <ul class="spec-list">
@@ -571,7 +570,6 @@
             </ul>
           </section>
 
-          <!-- Car setup -->
           <section class="card">
             <h2 class="card-title">Car setup</h2>
             <ul class="spec-list">
@@ -579,16 +577,13 @@
               <li><strong>Suspension:</strong> Coilovers, street/track alignment</li>
               <li><strong>Tires:</strong> 235/40R18 performance summers</li>
               <li><strong>Brake setup:</strong> Stock calipers, performance pads</li>
-              <li><strong>Notes:</strong> Slightly softer rear dampers vs. track day</li>
+              <li><strong>Notes:</strong> Softer rear dampers vs. track day</li>
             </ul>
           </section>
 
-          <!-- Route / map placeholder -->
           <section class="map-card">
             <h2 class="card-title">Route overview</h2>
             <div class="map-placeholder">
-              <!-- Replace with an <img> screenshot of a map if you want -->
-              <!-- <img src="images/story-mountain-route-map.jpg" alt="Map of the mountain route" /> -->
               Optional map / route screenshot goes here
             </div>
             <p class="map-note">
@@ -597,35 +592,24 @@
             </p>
           </section>
 
-          <!-- Photos -->
           <section class="card">
             <h2 class="card-title">Favorite photos</h2>
             <div class="gallery-grid">
-              <!-- Replace with real images if you have them -->
-              <div class="gallery-item empty">
-                Car at the overlook
-              </div>
-              <div class="gallery-item empty">
-                Close-up of wheels / tires
-              </div>
-              <div class="gallery-item empty">
-                Interior / driver's view
-              </div>
-              <div class="gallery-item empty">
-                Road detail / curves
-              </div>
+              <div class="gallery-item empty">Car at the overlook</div>
+              <div class="gallery-item empty">Close-up of wheels / tires</div>
+              <div class="gallery-item empty">Interior / driver's view</div>
+              <div class="gallery-item empty">Road detail / curves</div>
             </div>
           </section>
 
-          <!-- Tags -->
           <section class="card">
             <h2 class="card-title">Tags &amp; vibe</h2>
             <div class="tag-cloud">
               <span class="tag">Story</span>
               <span class="tag">Drive</span>
               <span class="tag">Mountain run</span>
-              <span class="tag">Handling</span>
-              <span class="tag">Suspension test</span>
+              <span class="tag">Handling test</span>
+              <span class="tag">Suspension</span>
               <span class="tag">Photos</span>
             </div>
           </section>
