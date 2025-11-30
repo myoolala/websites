@@ -41,3 +41,9 @@ variable "region" {
   description = "Region being deployed in AWS"
   default     = "us-east-1"
 }
+
+variable "priority" {
+  type = number
+  description = "Listener rule priority number"
+  default = 100
+}

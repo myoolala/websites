@@ -26,7 +26,7 @@ resource "aws_lb_target_group" "forwarder" {
 
 resource "aws_lb_listener_rule" "this" {
   listener_arn = var.listener_arn
-  priority     = 100
+  priority     = var.priority
 
   action {
     type             = "forward"

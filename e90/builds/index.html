@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BMW 3 Series – Builds, Jobs & Lessons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: radial-gradient(circle, #111827, #020617);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    nav a.active {
+      border-color: var(--accent);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+    }
+
+    /* Page heading */
+
+    .page-header {
+      margin-bottom: 24px;
+    }
+
+    .page-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .page-title {
+      font-size: clamp(2rem, 3vw, 2.4rem);
+      margin-bottom: 10px;
+    }
+
+    .page-title span.highlight {
+      color: var(--accent);
+    }
+
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    /* Filter / Legend */
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .filter-legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+    }
+
+    .filter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+    }
+
+    .filter-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    .filter-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Timeline list */
+
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 4px;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, rgba(148, 163, 184, 0.5), transparent);
+    }
+
+    .year-group {
+      margin-bottom: 26px;
+    }
+
+    .year-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 8px;
+      padding-left: 4px;
+    }
+
+    .entry {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .entry-dot {
+      position: absolute;
+      left: -2px;
+      top: 16px;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 2px solid rgba(148, 163, 184, 0.8);
+      background: #020617;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+    }
+
+    .entry-card {
+      margin-left: 18px;
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 12px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.5fr) minmax(0, 1.4fr);
+      gap: 14px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .entry-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.65);
+      border-color: rgba(96, 165, 250, 0.8);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .entry-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .entry-meta-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+
+    .entry-date {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .entry-type {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .entry-type.build {
+      border-color: rgba(96, 165, 250, 0.9);
+    }
+
+    .entry-type.job {
+      border-color: rgba(52, 211, 153, 0.9);
+    }
+
+    .entry-type.story {
+      border-color: rgba(244, 114, 182, 0.9);
+    }
+
+    .entry-title {
+      font-size: 0.98rem;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .entry-summary {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .entry-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      font-size: 0.78rem;
+    }
+
+    .entry-tag {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      color: var(--text-muted);
+    }
+
+    .entry-link {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--accent);
+    }
+
+    .entry-link span {
+      font-size: 0.9em;
+    }
+
+    /* Thumbnail */
+
+    .entry-thumb {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      min-height: 120px;
+    }
+
+    .entry-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .entry-thumb.empty {
+      border-style: dashed;
+      opacity: 0.8;
+    }
+
+    /* Footer */
+
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .entry-card {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .entry-thumb {
+        min-height: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          E90
+        </div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>Builds, Jobs &amp; Lessons</span>
+        </div>
+      </div>
+      <nav>
+        <a href="../">Home</a>
+        <!-- <a href="build.html">Car Build</a>
+        <a href="info.html">Platform Info</a>
+        <a href="resources.html">Resources</a>
+        <a href="builds-lessons.html" class="active">Builds &amp; Lessons</a> -->
+      </nav>
+    </header>
+
+    <main>
+      <div class="page-header">
+        <div class="page-kicker">Chronology</div>
+        <h1 class="page-title">
+          <span class="highlight">Builds, jobs,</span> and the lessons behind them.
+        </h1>
+        <p class="page-subtitle">
+          A chronological log of everything done to my cars that I feel deserves a page.
+          From simple maintenance jobs to big retrofit projects and 
+          any random lessons that I feel should be added.
+        </p>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-legend">
+          <div class="filter-pill">
+            <span class="filter-dot"></span> Build
+          </div>
+          <div class="filter-pill">
+            <span class="filter-dot"></span> Job / Maintenance
+          </div>
+          <div class="filter-pill">
+            <span class="filter-dot"></span> Lesson
+          </div>
+        </div>
+        <div class="filter-note">
+          Newest entries at the top
+        </div>
+      </div>
+
+      <!-- Timeline list -->
+      <section class="timeline">
+        <!-- Example year group – duplicate & edit as needed -->
+        <div class="year-group">
+          <div class="year-label">2025</div>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">November 2, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">We blew up another n52 in 6 months</h2>
+                <p class="entry-summary">
+                  These engines are great I swear
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e82</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">Boom</span>
+                    <span class="entry-tag">Autocross</span>
+                </div>
+                <a href="./n52-went-boom-2/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">August 14, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">M3 servotronic solenoid delete</h2>
+                <p class="entry-summary">
+                  I hope you like light steering
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Steering</span>
+                </div>
+                <a href="./m3-servotronic-solenoid-delete/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">July 3, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Clutch replacement</h2>
+                <p class="entry-summary">
+                    Cuz im dumb
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">Clutch</span>
+                    <span class="entry-tag">Maintenance</span>
+                </div>
+                <a href="./e91-n52-clutch-replacement/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">May 20, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">New engine went in</h2>
+                <p class="entry-summary">
+                  This was not a bad job
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">Maintenance</span>
+                    <span class="entry-tag">Engine</span>
+                    <span class="entry-tag">Oil</span>
+                </div>
+                <a href="./replace-the-engine-1/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">May 2-4, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Track weekend number 3</h2>
+                <p class="entry-summary">
+                  Heh....
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">HPDE</span>
+                    <span class="entry-tag">Boom</span>
+                </div>
+                <a href="./e91-track-weekend-3/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">April 6, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Oil thermostat replacement</h2>
+                <p class="entry-summary">
+                  This was meh. Like it helps but at what cost. Time mostly
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Cooling</span>
+                </div>
+                <a href="./oil-thermostat-lock-open/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">March 14-16, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Track weekend number 2</h2>
+                <p class="entry-summary">
+                  The rear end is delightful, and the car is amazing. More fun than my m2c
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">HPDE</span>
+                </div>
+                <a href="./e91-track-weekend-2/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">March 8, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">335i rear brake retrofit</h2>
+                <p class="entry-summary">
+                  Wow this did way more than I expected
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">n52</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Braking</span>
+                </div>
+                <a href="./335-e91-rear-brake-swap/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">March 8, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">M3 oil cooler upgrade</h2>
+                <p class="entry-summary">
+                  Yeah seeing 290° on track wasn't ideal
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Cooling</span>
+                </div>
+                <a href="./m3-oil-cooler-retrofit/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <!-- ENTRY 1 -->
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">March 8, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Installed an m3 steering rack</h2>
+                <p class="entry-summary">
+                  Read online on a UK forum that the m3 rack swaps right in, so I tested it.
+                  Spoiler, it does.
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Steering</span>
+                  <span class="entry-tag">Alignment</span>
+                </div>
+                <a href="./m3-steering-rack-1/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                I didn't take any pictures I'm storry
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">March 8, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Alluminum oil pan</h2>
+                <p class="entry-summary">
+                  Car was in the air anyway for the m3 rack, so this got swapped in.
+                  The Maine winters took its toll on the pan and replacements are expensive.
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Maintenance</span>
+                  <span class="entry-tag">Engine</span>
+                </div>
+                <a href="./al-oil-pan-swap/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Jan 18, 2025</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Rear end rebuild</h2>
+                <p class="entry-summary">
+                  Continuation of replacing everything in the tired suspension
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Maintenance</span>
+                  <span class="entry-tag">Suspension</span>
+                </div>
+                <a href="./rear-end-rebuild/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <!-- <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Oct 06, 2025</div>
+                  <div class="entry-type job">Job</div>
+                </div>
+                <h2 class="entry-title">Oil change, plugs &amp; coils pre-winter</h2>
+                <p class="entry-summary">
+                  Routine service before it gets cold: fresh oil, filter, spark plugs,
+                  and ignition coils. Logged before/after data to track idle smoothness
+                  and timing corrections.
+                </p>
+                <div class="entry-tags">
+                  <span class="entry-tag">Maintenance</span>
+                  <span class="entry-tag">DIY</span>
+                </div>
+              </div>
+              <div class="entry-thumb empty">
+                No photo added yet
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Sep 01, 2025</div>
+                  <div class="entry-type story">Story</div>
+                </div>
+                <h2 class="entry-title">First mountain run with the new setup</h2>
+                <p class="entry-summary">
+                  Took the e90 out to the twisties after a round of suspension and tire
+                  changes. Notes on how the car felt, temps, and a couple of little
+                  road trip moments worth remembering.
+                </p>
+                <div class="entry-tags">
+                  <span class="entry-tag">Drive</span>
+                  <span class="entry-tag">Story</span>
+                  <span class="entry-tag">Photos</span>
+                </div>
+                <a href="story-mountain-run.html" class="entry-link">
+                  Read the full story <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                Trip photo placeholder
+              </div>
+            </div>
+          </article> -->
+        </div>
+
+        <!-- Another year group example -->
+        <div class="year-group">
+          <div class="year-label">2024</div>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Sept 28, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">M3 Cowl</h2>
+                <p class="entry-summary">
+                  I got too annoyed with the factory cowl on the m3 strut bar
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Chassis</span>
+                </div>
+                <a href="./m3-strut-bar-2/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Sept 13-14, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">First track weekend in the e91</h2>
+                <p class="entry-summary">
+                  She finally got on track, time for thoughts
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">HPDE</span>
+                </div>
+                <a href="./e91-track-weekend-1/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Auguest 30, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">M3 strut bar</h2>
+                <p class="entry-summary">
+                  After seeing the issues my friends had with coil overs and the factory strut bar,
+                  I decided to fix that problem before it happened
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Chassis</span>
+                </div>
+                <a href="./m3-strut-bar/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">August 25, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Gauge cluster swap</h2>
+                <p class="entry-summary">
+                  Even though I had an m sport, it did not come with an oil temp gauge like on the m sport coupes.
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Gauges</span>
+                </div>
+                <a href="./oil-temp-gauge/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">July 31, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">CSF radiator</h2>
+                <p class="entry-summary">
+                  Coded out the e-diff among other things on the car that would cause issues on track
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Coding</span>
+                </div>
+                <a href="./coding-out-features/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">July 26, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">CSF radiator</h2>
+                <p class="entry-summary">
+                  In part of preparing this car for the track, this was the last cooling step to do.
+                  Spoiler, it wasn't enough
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Cooling</span>
+                </div>
+                <a href="./csf-radiator/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">May 24, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">LSD conversion</h2>
+                <p class="entry-summary">
+                  In part of preparing this car for the track, but really every car should do this. 
+                  It's too easy not to
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Differential</span>
+                </div>
+                <a href="./diff-build-1/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">March 8, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Headers</h2>
+                <p class="entry-summary">
+                  In part of preparing this car for the track, I would like a little more top end
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Power</span>
+                </div>
+                <a href="./headers-guide/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Feb 9, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Wheel studs</h2>
+                <p class="entry-summary">
+                  Just do it
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Sanity</span>
+                  <span class="entry-tag">More Sanity</span>
+                </div>
+                <a href="./wheel-studs/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Feb 9, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">MILVS installation</h2>
+                <p class="entry-summary">
+                  No idea if this did anything but I did it and it was not hard
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Power</span>
+                </div>
+                <a href="./milvs/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <img width="320" src="../assets/milvs.jpg" alt="MILVS installation" />
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Feb 9, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">3 stage manifold retrofit</h2>
+                <p class="entry-summary">
+                  In part of preparing this car for the track, I would like at least a little top end
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Power</span>
+                </div>
+                <a href="./330i-intake-retrofit/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                maybe a pic here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Feb 9, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Installed a factory 330i oil cooler</h2>
+                <p class="entry-summary">
+                  In part of preparing this car for the track, I installed a factory oil cooler.
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                  <span class="entry-tag">Upgrades</span>
+                  <span class="entry-tag">Cooling</span>
+                </div>
+                <a href="./330i-oil-cooler-retrofit/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                Oil cooler picture here
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Jan 6, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Installed an m3 coupe front sway bar</h2>
+                <p class="entry-summary">
+                  Kind of worth it. Easy to install though
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Suspension</span>
+                </div>
+                <a href="./front-m3-swaybar/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                I don't have a picture for this :/
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Jan 6, 2024</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Installed the m3 front control arms</h2>
+                <p class="entry-summary">
+                  103% worth it. Easy to install
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Alignment</span>
+                </div>
+                <a href="./m3-front-control-arms/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                I don't have a picture for this :/
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Another year group example -->
+        <div class="year-group">
+          <div class="year-label">2023</div>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">December 12, 2023</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Installed Dinan fixed camber plates</h2>
+                <p class="entry-summary">
+                  103% worth it. Easy to install
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Alignment</span>
+                </div>
+                <a href="./dinan-camber-plates/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                I don't have a picture for this :/
+              </div>
+            </div>
+          </article>
+
+          <article class="entry">
+            <div class="entry-dot"></div>
+            <div class="entry-card">
+              <div class="entry-main">
+                <div class="entry-meta-row">
+                  <div class="entry-date">Nov 9, 2023</div>
+                  <div class="entry-type build">Build</div>
+                </div>
+                <h2 class="entry-title">Replaced and upgraded the brakes on the e91</h2>
+                <p class="entry-summary">
+                  First big piece of maintenance since buying the car. A sticking rear caliper and 
+                  crusty front calipers called for a total revamp.
+                </p>
+                <div class="entry-tags">
+                    <span class="entry-tag">e91</span>
+                    <span class="entry-tag">Maintenance</span>
+                    <span class="entry-tag">Upgrades</span>
+                    <span class="entry-tag">Braking</span>
+                </div>
+                <a href="./initial-brake-upgrade/" class="entry-link">
+                  View full write-up <span>➜</span>
+                </a>
+              </div>
+              <div class="entry-thumb">
+                <!-- <img src="images/2024-06-15-baseline.jpg" alt="Stock BMW 3 Series" /> -->
+                Picture of the brakes
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>

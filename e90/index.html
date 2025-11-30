@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BMW 3 Series Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: radial-gradient(circle, #111827, #020617);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+      color: #f9fafb;
+      font-weight: 500;
+      box-shadow: 0 10px 25px rgba(15, 118, 213, 0.35);
+    }
+
+    .nav-cta:hover {
+      filter: brightness(1.05);
+    }
+
+    /* Hero */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .hero-highlight {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 32rem;
+      margin-bottom: 18px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.92rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+      border-color: rgba(148, 163, 184, 0.4);
+      color: #f9fafb;
+      box-shadow: 0 12px 30px rgba(15, 118, 213, 0.45);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.7);
+      border-color: var(--border-subtle);
+      color: var(--text-muted);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    .btn-primary span.icon,
+    .btn-ghost span.icon {
+      font-size: 1rem;
+    }
+
+    /* Hero image card */
+
+    .hero-visual {
+      background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.18), transparent 55%),
+                  radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.22), transparent 60%),
+                  var(--bg-elevated);
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 16px 16px 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-visual-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .status-chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(96, 165, 250, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      color: #bfdbfe;
+      font-size: 0.75rem;
+    }
+
+    .hero-image-shell {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: #020617;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-image-shell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.7;
+      filter: saturate(1.1);
+    }
+
+    .hero-image-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.95));
+      text-align: center;
+    }
+
+    .hero-image-placeholder span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      font-size: 0.75rem;
+    }
+
+    .hero-tag {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      color: var(--text-muted);
+    }
+
+    /* Sections */
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .section-header h2 {
+      font-size: 1.1rem;
+    }
+
+    .section-header p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: var(--card-radius);
+      padding: 14px;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.7);
+      border-color: rgba(96, 165, 250, 0.7);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .card-thumb {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #020617;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      border: 1px dashed rgba(55, 65, 81, 0.7);
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .card-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      font-size: 0.75rem;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsiveness */
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .page {
+        padding-inline: 14px;
+      }
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          E90
+        </div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>E9x-chassis & E8x-chassis reference</span>
+        </div>
+      </div>
+      <nav>
+        <a href="./builds/">Car Builds</a>
+        <!-- <a href="./info/">Platform Info</a>
+        <a href="./resources/">Resources</a>
+        <a href="#gallery" class="nav-cta">Image Gallery</a> -->
+      </nav>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-text">
+          <h1>
+            My documentation on the <span class="hero-highlight">BMW e9x</span> build,
+            mods, and maintenance.
+          </h1>
+          <p class="hero-subtitle">
+            A central hub for e9x n52 based information. This is predominantly powered by lessons and meant to add a central plane
+            for people to learn about maintenance as well as what they can do to modify their cars.
+          </p>
+
+          <!-- <div class="hero-meta">
+            <div class="pill">Build log</div>
+            <div class="pill">DIY & documentation</div>
+            <div class="pill">Photo-heavy</div>
+          </div> -->
+
+          <!-- <div class="hero-actions">
+            <a href="./builds/" class="btn-primary">
+              <span class="icon">➜</span>
+              <span>Jump to the build overview</span>
+            </a>
+            <a href="info.html" class="btn-ghost">
+              <span class="icon">ⓘ</span>
+              <span>View general platform info</span>
+            </a>
+          </div> -->
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-visual-header">
+            <span>Featured Hero Image</span>
+            <span class="status-chip">Replace with real car shot</span>
+          </div>
+
+          <div class="hero-image-shell">
+            <!-- Replace this placeholder with a real image -->
+            <!-- Example: <img src="images/hero-bmw-3series.jpg" alt="BMW 3 Series front 3/4 view" /> -->
+            <div class="hero-image-placeholder">
+              <strong>Hero Image Placeholder</strong>
+              <img height="320" src="./assets/my-poor-car.jpg"/>
+              <span>Drop your favorite 3 Series photo here</span>
+            </div>
+          </div>
+
+          <div class="hero-tags">
+            <div class="hero-tag">Chassis: E9x / E8x</div>
+            <div class="hero-tag">Engine: N52 </div>
+            <div class="hero-tag">Street · Track · Daily</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick access sections -->
+      <section id="sections">
+        <div class="section-header">
+          <h2>Main Sections</h2>
+          <!-- <p>Shortcut into the key areas of your documentation.</p> -->
+        </div>
+
+        <div class="grid">
+          <!-- Build card -->
+          <a href="./builds/" class="card">
+            <div class="card-thumb">
+              <img src="./assets/milvs.jpg" alt="BMW 3 Series build"/>
+            </div>
+            <div class="card-title">Car Build & Mod Log</div>
+            <div class="card-desc">
+              My personal e91 build
+            </div>
+            <div class="card-meta">
+              <span class="chip">Build</span>
+              <span>→ View build details</span>
+            </div>
+          </a>
+
+          <!-- Info card -->
+          <a href="./info/" class="card">
+            <div class="card-thumb">
+              <!-- Example: <img src="images/chassis-diagram.jpg" alt="BMW chassis diagram" /> -->
+              Pretend there is a picture here
+            </div>
+            <div class="card-title">General Information</div>
+            <div class="card-desc">
+              General information like torque specs, parts options, and what mods are available.
+            </div>
+            <div class="card-meta">
+              <span class="chip">Reference</span>
+              <span>→ Open info hub</span>
+            </div>
+          </a>
+
+          <!-- Resources card -->
+          <a href="./resources/" class="card">
+            <div class="card-thumb">
+              <!-- Example: <img src="images/resources.jpg" alt="Laptop with BMW tools" /> -->
+              Pretend there is a picture here
+            </div>
+            <div class="card-title">Relevant Resources</div>
+            <div class="card-desc">
+              Links to anything I found useful
+            </div>
+            <div class="card-meta">
+              <span class="chip">Links</span>
+              <span>→ Browse resources</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Gallery preview -->
+      <section id="gallery">
+        <!-- <div class="section-header">
+          <h2>Gallery Preview</h2>
+          <p>Add rolling shots, bay photos, interior details, and before/after images.</p>
+        </div>
+        <div>
+            Coming Eventually
+        </div> -->
+        <!--
+        <div class="grid">
+          <div class="card">
+            <div class="card-thumb">
+              Example: <img src="images/gallery-exterior.jpg" alt="BMW exterior" />
+              Exterior shots
+            </div>
+            <div class="card-title">Exterior & Stance</div>
+            <div class="card-desc">
+              Side profile, fitment, aero pieces, track day photos, and detail shots.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-thumb">
+              Example: <img src="images/gallery-interior.jpg" alt="BMW interior" />
+              Interior & cluster
+            </div>
+            <div class="card-title">Interior & Driver’s View</div>
+            <div class="card-desc">
+              Wheel, seats, cluster layouts, gauges, iDrive retrofits, and subtle touches.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-thumb">
+              Example: <img src="images/gallery-engine.jpg" alt="BMW engine bay" />
+              Engine bay & mechanical
+            </div>
+            <div class="card-title">Engine Bay & Mechanical</div>
+            <div class="card-desc">
+              Intake, turbo, cooling upgrades, suspension components, and hardware details.
+            </div>
+          </div>
+        </div> -->
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>
