@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mountain Run – Story Detail | BMW 3 Series</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: radial-gradient(circle, #111827, #020617);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Breadcrumb / meta */
+
+    .breadcrumb {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--text-muted);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .story-header {
+      margin-bottom: 20px;
+    }
+
+    .story-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .story-title {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      margin-bottom: 8px;
+    }
+
+    .story-title span.highlight {
+      color: var(--accent);
+    }
+
+    .story-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .story-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Layout */
+
+    .story-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.4fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* Left side: narrative */
+
+    .story-body {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 16px 16px 14px;
+    }
+
+    .story-section-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .story-intro {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .story-block {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.8);
+    }
+
+    .story-block:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .story-block-title {
+      font-size: 0.96rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .story-block-time {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .story-block-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .story-callout {
+      margin-top: 6px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px dashed rgba(96, 165, 250, 0.7);
+      background: rgba(15, 23, 42, 0.98);
+      font-size: 0.8rem;
+      color: #bfdbfe;
+    }
+
+    /* Optional inline photo */
+
+    .story-photo-inline {
+      margin-top: 8px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .story-photo-inline img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Right side: sidebar */
+
+    .story-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .spec-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .spec-list li strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.78rem;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+    }
+
+    /* Map / route placeholder */
+
+    .map-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px 14px;
+    }
+
+    .map-placeholder {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .map-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .map-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Gallery */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item.empty {
+      border-style: dashed;
+    }
+
+    /* Footer */
+
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .story-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">3ER</div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>Story detail</span>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="build.html">Car Build</a>
+        <a href="info.html">Platform Info</a>
+        <a href="resources.html">Resources</a>
+        <a href="builds-stories.html">Builds &amp; Stories</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="breadcrumb">
+        <a href="builds-stories.html">Builds, Jobs &amp; Stories</a>
+        <span>›</span>
+        <span>First mountain run with the new setup</span>
+      </div>
+
+      <header class="story-header">
+        <div class="story-kicker">Story · Drive</div>
+        <h1 class="story-title">
+          <span class="highlight">First mountain run</span> with the new setup.
+        </h1>
+        <div class="story-meta">
+          <span class="story-pill">Date: Sep 01, 2025</span>
+          <span class="story-pill">Route: Blue Ridge-style backroads (example)</span>
+          <span class="story-pill">Weather: 68°F · Clear</span>
+          <span class="story-pill">Companions: Solo</span>
+          <span class="story-pill">Setup: Coilovers · fresh tires</span>
+        </div>
+      </header>
+
+      <section class="story-layout">
+        <!-- Left: Narrative -->
+        <article class="story-body">
+          <div class="story-section-title">The day &amp; the drive</div>
+          <p class="story-intro">
+            A simple plan: take the freshly set up 3 Series out to some familiar
+            roads, feel out the new suspension and tires, and see how everything
+            behaves over a longer drive with elevation, tight corners, and rough
+            sections of pavement.
+          </p>
+
+          <!-- Block 1 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Morning prep</h2>
+            <div class="story-block-time">09:00 – Garage</div>
+            <p class="story-block-text">
+              Checked fluids, torqued the wheel lugs, and did a quick walkaround to
+              make sure nothing was rubbing or leaking after the last round of work.
+              Threw basic tools, a tire pressure gauge, and an emergency kit in the
+              trunk, then set the suspension to a slightly softer street setting
+              than the last alignment day.
+            </p>
+            <div class="story-photo-inline">
+              <!-- Replace this with an <img> if you have one -->
+              <!-- <img src="images/story-morning-bay.jpg" alt="BMW in the garage before the drive" /> -->
+              Optional photo: the car in the garage before heading out
+            </div>
+          </section>
+
+          <!-- Block 2 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Highway out &amp; first impressions</h2>
+            <div class="story-block-time">10:00 – Outbound highway</div>
+            <p class="story-block-text">
+              The first stretch was mostly highway, just enough time to feel how the
+              car behaved over expansion joints and mild bumps. Ride quality was
+              firm but not harsh, with far less float than stock. Steering felt
+              a bit more direct, and small corrections at speed needed less wheel
+              input than before.
+            </p>
+            <div class="story-callout">
+              Note: logged a few minutes of data here — speed, steering angle, and
+              ride height changes — to compare against alignment day runs.
+            </div>
+          </section>
+
+          <!-- Block 3 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Into the twisties</h2>
+            <div class="story-block-time">11:00 – Mountain section</div>
+            <p class="story-block-text">
+              Once the road tightened up, the differences really showed. Turn-in
+              was sharper and the chassis settled quickly mid-corner. Bumps that
+              used to unsettle the rear now just registered as a quick motion, with
+              the car staying composed instead of bouncing. Braking zones felt more
+              predictable with a more stable rear end.
+            </p>
+            <div class="story-photo-inline">
+              Optional photo: overlook / car parked with the mountains in the background
+            </div>
+          </section>
+
+          <!-- Block 4 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Break at the overlook</h2>
+            <div class="story-block-time">12:15 – Overlook pull-off</div>
+            <p class="story-block-text">
+              Pulled off at a small overlook to let brakes cool and get out of the
+              car for a minute. Popped the hood to check for any leaks, smells, or
+              loose connections—everything looked clean. Took a few photos and made
+              quick notes on tire pressures and how the car reacted in a couple of
+              specific corners.
+            </p>
+            <div class="story-callout">
+              Road notes: corner 3 tight hairpin, slight off-camber; car stayed
+              neutral with just a hint of safe understeer when pushing harder.
+            </div>
+          </section>
+
+          <!-- Block 5 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Return trip &amp; takeaways</h2>
+            <div class="story-block-time">14:00 – Heading home</div>
+            <p class="story-block-text">
+              On the way back, the pace was calmer, focusing on consistency rather
+              than speed. No strange noises, no rubbing, and the car stayed composed
+              even over rough patches that normally upset the chassis. The setup
+              feels daily-drivable while still clearly more capable than stock.
+            </p>
+            <div class="story-callout">
+              Takeaway: this is a solid baseline for the chassis. Next steps will be
+              fine-tuning damper clicks and potentially adding a bit more front camber
+              for longer track sessions.
+            </div>
+          </section>
+        </article>
+
+        <!-- Right: Sidebar -->
+        <aside class="story-sidebar">
+          <!-- Trip summary -->
+          <section class="card">
+            <h2 class="card-title">Trip summary</h2>
+            <ul class="spec-list">
+              <li><strong>Date:</strong> Sep 01, 2025</li>
+              <li><strong>Distance:</strong> ~120 mi round-trip (example)</li>
+              <li><strong>Duration:</strong> ~5 hours total</li>
+              <li><strong>Average temp:</strong> 65–70°F</li>
+              <li><strong>Fuel used:</strong> ~⅓ tank</li>
+            </ul>
+          </section>
+
+          <!-- Car setup -->
+          <section class="card">
+            <h2 class="card-title">Car setup</h2>
+            <ul class="spec-list">
+              <li><strong>Chassis:</strong> E9x (example)</li>
+              <li><strong>Suspension:</strong> Coilovers, street/track alignment</li>
+              <li><strong>Tires:</strong> 235/40R18 performance summers</li>
+              <li><strong>Brake setup:</strong> Stock calipers, performance pads</li>
+              <li><strong>Notes:</strong> Slightly softer rear dampers vs. track day</li>
+            </ul>
+          </section>
+
+          <!-- Route / map placeholder -->
+          <section class="map-card">
+            <h2 class="card-title">Route overview</h2>
+            <div class="map-placeholder">
+              <!-- Replace with an <img> screenshot of a map if you want -->
+              <!-- <img src="images/story-mountain-route-map.jpg" alt="Map of the mountain route" /> -->
+              Optional map / route screenshot goes here
+            </div>
+            <p class="map-note">
+              If you want to document the route, drop in a static map image or
+              list GPS waypoints here.
+            </p>
+          </section>
+
+          <!-- Photos -->
+          <section class="card">
+            <h2 class="card-title">Favorite photos</h2>
+            <div class="gallery-grid">
+              <!-- Replace with real images if you have them -->
+              <div class="gallery-item empty">
+                Car at the overlook
+              </div>
+              <div class="gallery-item empty">
+                Close-up of wheels / tires
+              </div>
+              <div class="gallery-item empty">
+                Interior / driver's view
+              </div>
+              <div class="gallery-item empty">
+                Road detail / curves
+              </div>
+            </div>
+          </section>
+
+          <!-- Tags -->
+          <section class="card">
+            <h2 class="card-title">Tags &amp; vibe</h2>
+            <div class="tag-cloud">
+              <span class="tag">Story</span>
+              <span class="tag">Drive</span>
+              <span class="tag">Mountain run</span>
+              <span class="tag">Handling</span>
+              <span class="tag">Suspension test</span>
+              <span class="tag">Photos</span>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>

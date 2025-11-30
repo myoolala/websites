@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mountain Run – Story Detail | BMW 3 Series</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: radial-gradient(circle, #111827, #020617);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Breadcrumb / meta */
+
+    .breadcrumb {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--text-muted);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .story-header {
+      margin-bottom: 20px;
+    }
+
+    .story-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .story-title {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      margin-bottom: 8px;
+    }
+
+    .story-title span.highlight {
+      color: var(--accent);
+    }
+
+    .story-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .story-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Layout */
+
+    .story-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.3fr) minmax(0, 1.4fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* Left side: narrative */
+
+    .story-body {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 16px 16px 14px;
+    }
+
+    .story-section-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .story-intro {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .story-block {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(31, 41, 55, 0.8);
+    }
+
+    .story-block:last-of-type {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .story-block-title {
+      font-size: 0.96rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .story-block-time {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .story-block-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .story-callout {
+      margin-top: 6px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px dashed rgba(96, 165, 250, 0.7);
+      background: rgba(15, 23, 42, 0.98);
+      font-size: 0.8rem;
+      color: #bfdbfe;
+    }
+
+    /* Optional inline photo */
+
+    .story-photo-inline {
+      margin-top: 8px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .story-photo-inline img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Right side: sidebar */
+
+    .story-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .spec-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .spec-list li strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.78rem;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+    }
+
+    /* Map / route placeholder */
+
+    .map-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px 14px;
+    }
+
+    .map-placeholder {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8px;
+    }
+
+    .map-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .map-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Gallery */
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: #020617;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+      text-align: center;
+      padding: 6px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item.empty {
+      border-style: dashed;
+    }
+
+    /* Footer */
+
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .story-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">3ER</div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>Story detail</span>
+        </div>
+      </div>
+      <nav>
+        <a href="../../">Home</a>
+        <!-- <a href="build.html">Car Build</a>
+        <a href="info.html">Platform Info</a>
+        <a href="resources.html">Resources</a>
+        <a href="builds-stories.html">Builds &amp; Stories</a> -->
+      </nav>
+    </header>
+
+    <main>
+      <div class="breadcrumb">
+        <a href="builds-stories.html">Builds, Jobs &amp; Stories</a>
+        <span>›</span>
+        <span>WE BLEW UP ANOTHER N52</span>
+      </div>
+
+      <header class="story-header">
+        <div class="story-kicker">Story · Drive</div>
+        <h1 class="story-title">
+          WE BLEW UP ANOTHER N52
+        </h1>
+        <div class="story-meta">
+          <span class="story-pill">Date: Nov 02, 2025</span>
+          <!-- <span class="story-pill">Route: Blue Ridge-style backroads (example)</span> -->
+          <!-- <span class="story-pill">Weather: 68°F · Clear</span> -->
+          <!-- <span class="story-pill">Activity: Autocross</span>
+          <span class="story-pill">Setup: Coilovers · 200tw tires</span> -->
+        </div>
+      </header>
+
+      <section class="story-layout">
+        <!-- Left: Narrative -->
+        <article class="story-body">
+          <div class="story-section-title">Context</div>
+          <p class="story-intro">
+            For starters, this is not my car, but a friends 128i that we been building before my wagon.
+            This was the last autocross of the year and my goal was to have fun and push the cars. 
+            The 128i was finally ready to drive hopefully without mechanicals on some fresh sticky tires.
+            The track itself is an old one with not a lot of grip.
+          </p>
+
+          <!-- Block 1 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Before it blew</h2>
+            <div class="story-block-time">2ish? idk I left for the day by there</div>
+            <p class="story-block-text">
+              Our group we tend to share cars a lot because why not. For this car with the tires, 
+              this helped get heat in the tires. The car was getting hotlapped. A check engine light came on
+              before the run the engine blew on.
+            </p>
+            <div class="story-photo-inline">
+              <!-- Replace this with an <img> if you have one -->
+              <!-- <img src="images/story-morning-bay.jpg" alt="BMW in the garage before the drive" /> -->
+              Optional photo: the car in the garage before heading out
+            </div>
+          </section>
+
+          <!-- Block 2 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Lock up</h2>
+            <div class="story-block-time">Again, idk.</div>
+            <p class="story-block-text">
+              My friend gets in his car, and within 15 seconds of the run on a long left sweeper, the engine locks.
+              My friend doesn't know if the wheels locked but he knows he lost power steering before coming to a stop.
+              It was a very sudden lock up and obviously the car wouldn't start.
+            </p>
+            <div class="story-callout">
+              Note: logged a few minutes of data here — speed, steering angle, and
+              ride height changes — to compare against alignment day runs.
+            </div>
+          </section>
+
+          <!-- Block 3 -->
+          <section class="story-block">
+            <h2 class="story-block-title">First step in diagnosis</h2>
+            <div class="story-block-time">The next day</div>
+            <p class="story-block-text">
+              Car home we started diving into little by little. Check to confirm just the car rolls in gear
+              with the clutch in to confirm the transmission isn't to blame. Remove the belt too. Nothing.
+              Putting a breaker bar on the crank and it doesn't move, not even millimeters. It is very stuck
+              even putting what was probably a few hundred pounds of force into the bar. After that, the transmission and flywheel
+              got pulled once again to confirm that wasn't the issue. Nope. 
+            </p>
+            <p class="story-block-text">
+              The block was also free of any damage. No particals in the filter or vanos screens. Aside from the crank not turning,
+              there were no symptoms.
+            </p>
+            <div class="story-photo-inline">
+              Optional photo: overlook / car parked with the mountains in the background
+            </div>
+          </section>
+
+          <!-- Block 4 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Pulled the motor</h2>
+            <!-- <div class="story-block-time">12:15 – Overlook pull-off</div> -->
+            <p class="story-block-text">
+              At this point we pulled the motor, out the bottom which was WAY easier than the front like what I did.
+              Still no signs
+            </p>
+            <div class="story-callout">
+              Road notes: corner 3 tight hairpin, slight off-camber; car stayed
+              neutral with just a hint of safe understeer when pushing harder.
+            </div>
+            <p class="story-block-text">
+              Pulling the engine apart we found the culprits. Look at these rod bearings.
+            </p>
+            <p class="story-block-text">
+              3 spun bears, 3 more heat damaged bearings, and a bent crank. Very nice. What is interesting is the 
+              lack of heat marks i nthe connecting rods indicating a very sudden failure/loss of oil pressure. 
+              The mains were spotless though
+            </p>
+          </section>
+
+          <!-- Block 5 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Theories on why</h2>
+            <!-- <div class="story-block-time">14:00 – Heading home</div> -->
+            <p class="story-block-text">
+              Talking with a friend who raced bmw's professionally, it seems that this was a combination of issues.
+              The failure was obviously a lack of oil. The concensus landed on we are asking too much of the stock engine.
+              Namely, this engine was designed back in the early 2000s for not motorsport use. Couple that with 25 year newer 
+              very sticky rubber and an aggressive sport to slosh oil with an aggresive driver. We lost oil pressure and fried the motor
+            </p>
+          </section>
+
+          <!-- Block 6 -->
+          <section class="story-block">
+            <h2 class="story-block-title">Fix?</h2>
+            <!-- <div class="story-block-time">14:00 – Heading home</div> -->
+            <p class="story-block-text">
+              All together, installing the new motor is easy so nothing to talk about there. What we did do was the same thing as I did
+              on mine already. Installed an oil pan baffle. The n54 one welds right into the alluminum pans without issue. 
+              Not a guaranteed fix but definitely worth it and we will be installing these on all motors now.
+            </p>
+            <br/>
+            <p class="story-block-text">
+              I plan to add an accusump to my car now.
+            </p>
+          </section>
+        </article>
+
+        <!-- Right: Sidebar -->
+        <aside class="story-sidebar">
+          <!-- Trip summary -->
+          <section class="card">
+            <h2 class="card-title">Trip summary</h2>
+            <ul class="spec-list">
+              <li><strong>Date:</strong> Nov 02, 2025</li>
+              <li><strong>Sport:</strong> Autocross</li>
+              <li><strong>Average temp:</strong> 60°F</li>
+            </ul>
+          </section>
+
+          <!-- Car setup -->
+          <section class="card">
+            <h2 class="card-title">Car setup</h2>
+            <ul class="spec-list">
+              <li><strong>Chassis:</strong> E82</li>
+              <li><strong>Trim:</strong> 128i</li>
+              <li><strong>Suspension:</strong> Coilovers, street/track alignment</li>
+              <li><strong>Tires:</strong> 200tw summers</li>
+              <li><strong>Brake setup:</strong> 335i brakes all around</li>
+            </ul>
+          </section>
+
+          <!-- Photos -->
+          <!-- <section class="card">
+            <h2 class="card-title">Favorite photos</h2>
+            <div class="gallery-grid">
+              <div class="gallery-item empty">
+                Car at the overlook
+              </div>
+              <div class="gallery-item empty">
+                Close-up of wheels / tires
+              </div>
+              <div class="gallery-item empty">
+                Interior / driver's view
+              </div>
+              <div class="gallery-item empty">
+                Road detail / curves
+              </div>
+            </div>
+          </section> -->
+
+          <!-- Tags -->
+          <section class="card">
+            <h2 class="card-title">Tags &amp; vibe</h2>
+            <div class="tag-cloud">
+              <span class="tag">N52</span>
+              <span class="tag">128i</span>
+              <span class="tag">e82</span>
+              <span class="tag">Spun Bearing</span>
+              <span class="tag">Sadness</span>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>
