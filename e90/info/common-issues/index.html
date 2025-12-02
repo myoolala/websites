@@ -332,11 +332,6 @@
       color: var(--text-main);
     }
 
-    a.disabled {
-        pointer-events: none;
-    }
-
-
     /* Footer */
 
     footer {
@@ -384,7 +379,7 @@
         </div>
       </div>
       <nav>
-        <a href="../">Home</a>
+        <a href="../../">Home</a>
         <!-- <a href="build.html">My car Build</a> -->
         <!-- <a href="info.html" class="active">Platform Info</a>
         <a href="resources.html">Resources</a>
@@ -394,15 +389,17 @@
 
     <main>
       <div class="breadcrumb">
-        <a href="index.html">Home</a>
+        <a href="../../">Home</a>
         <span>›</span>
-        <span>General information</span>
+        <a href="../">General information</a>
+        <span>›</span>
+        <span>Troubleshooting</span>
       </div>
 
       <header class="info-header">
         <div class="info-kicker">Reference</div>
         <h1 class="info-title">
-          <span class="highlight">General information</span> for the e9x
+          <span class="highlight">Troubleshooting</span> issues
         </h1>
         <!-- <div class="info-meta">
           <span class="info-pill">Quick overview</span>
@@ -414,8 +411,8 @@
         <!-- LEFT: quick-nav-style sections -->
         <div class="info-main">
           <!-- Maintenance -->
-          <section id="maintenance" class="section-card">
-            <a class="disabled" href="./maintenance/">
+          <section style="display: none" id="maintenance" class="section-card">
+            <a href="./maintenance/">
                 <div class="section-kicker">Maintenance</div>
                 <div class="section-title-row">
                 <h2 class="section-title">Service intervals &amp; basic care</h2>
@@ -438,7 +435,7 @@
           </section>
 
           <!-- Mods -->
-          <section id="mods" class="section-card">
+          <section style="display: none"id="mods" class="section-card">
               <a href="./mods/">
                 <div class="section-kicker">Modifications</div>
                 <div class="section-title-row">
@@ -463,7 +460,7 @@
           </section>
 
           <!-- Troubleshooting -->
-          <section id="troubleshooting" class="section-card">
+          <section style="display: none"id="troubleshooting" class="section-card">
             <a href="./common-issues/">
                 <div class="section-kicker">Troubleshooting</div>
                 <div class="section-title-row">

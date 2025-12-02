@@ -18,12 +18,12 @@ module "vpc" {
   ingress_subnets = [{
     ipv4_cidr = "172.31.0.0/27"
     az        = "us-east-1a"
-    nat       = true
+    nat       = false
     },
     {
       ipv4_cidr = "172.31.0.32/27"
       az        = "us-east-1b"
-      nat       = true
+      nat       = false
   }]
   compute_subnets = [{
       ipv4_cidr = "172.31.1.0/25"
