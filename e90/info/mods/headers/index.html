@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Headers – Modification | BMW 3 Series Docs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      background: radial-gradient(circle, #111827, #020617);
+    }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-text span:first-child { font-weight: 600; font-size: 1.05rem; }
+    .brand-text span:last-child { font-size: 0.8rem; color: var(--text-muted); }
+
+    nav {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+    nav a {
+      padding: 8px 14px; border-radius: 999px;
+      color: var(--text-muted); border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), transform var(--transition-fast);
+    }
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Breadcrumb / Page header */
+    .breadcrumb {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--text-muted); }
+    .breadcrumb a:hover { color: var(--accent); }
+
+    .mod-header { 
+        margin-bottom: 18px; 
+        justify-content: flex-start;
+    }
+    .mod-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .mod-title {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 8px;
+    }
+    .mod-title span.highlight { color: var(--accent); }
+    .mod-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.3fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* Left content */
+    .main { display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 16px;
+    }
+    .card-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .card-title { font-size: 1rem; margin-bottom: 6px; }
+    .card-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .chip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.96);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+                  transform var(--transition-fast), color var(--transition-fast);
+    }
+    .chip-link span.icon { font-size: 0.9rem; color: var(--accent); }
+    .chip-link:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Steps */
+    .step-list { display: flex; flex-direction: column; gap: 10px; counter-reset: step; margin-top: 10px; }
+
+    .step {
+      position: relative;
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      padding: 12px 12px 10px 40px;
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 11px;
+      top: 12px;
+      width: 20px; height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+      color: #f9fafb;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 1);
+    }
+    .step-title { font-size: 0.92rem; font-weight: 500; margin-bottom: 4px; }
+    .step-body { font-size: 0.88rem; color: var(--text-muted); }
+    .step-note {
+      margin-top: 6px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px dashed rgba(96, 165, 250, 0.65);
+      background: rgba(15, 23, 42, 0.95);
+      font-size: 0.8rem;
+      color: #bfdbfe;
+    }
+
+    /* Right sidebar (sticky) */
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title-small {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .spec-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .spec-list li strong { color: var(--text-main); font-weight: 500; }
+
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.78rem; }
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+    }
+
+    .mini-links { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; }
+    .mini-links a { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); padding: 4px 0; }
+    .mini-links a span.icon { color: var(--accent); }
+    .mini-links a:hover { color: var(--text-main); }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      header { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 780px) {
+      .page { padding-inline: 14px; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">E9X</div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>Modification</span>
+        </div>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+      </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+          <a href="/">Home</a>
+          <span>›</span>
+          <a href="/info/">General Information</a>
+          <span>›</span>
+          <a href="/info/mods/">Modifications</a>
+          <span>›</span>
+          <span>Headers</span>
+        </div>
+
+      <header class="mod-header">
+        <div class="mod-kicker">Modification · N52 Engines</div>
+        <h1 class="mod-title">
+          Headers
+        </h1>
+      </header>
+
+      <section class="layout">
+        <!-- LEFT -->
+        <div class="main">
+          <section class="card">
+            <div class="card-kicker">Overview</div>
+            <h2 class="card-title">What this mod is</h2>
+            <div class="card-body">
+              <b>Obligatory please check your local laws to confirm what you are allowed to do as options vary by region</b>
+              <br/>
+              This is the replacement of the restrictive factory exhaust manifold for one that flows more for increased power
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">Why do it</div>
+            <h2 class="card-title">Benefits & tradeoffs</h2>
+            <div class="card-body">
+              The factory manifold is a known restriction in the exhaust both for power and sound. From what we've seen, doing the headers alone 
+              does increase sound somewhat in the same way running a 135 muffler on a 128 also kind of increases the sound. For context a 135 muffler
+              is a gutted 128 muffler with a slightly larger inlet. Run them together though and the car gains a ton of volume.
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">Planning</div>
+            <h2 class="card-title">What to decide before you buy/install</h2>
+            <div class="card-body">
+                There are a few options but ideally if you can do this job with the engine out of the car, your life will be so much easier. In the car sucks.
+                Namely, I recommend to get at least 4 of the deep copper nuts sold by FCP as some of the header options have recesses for the nuts that make
+                tightening them with a wrench difficult.
+                <br/>
+                <br/>
+                In addition, get a set of long racheting flex head wrenches. You will <b>NEED</b> them
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">Header Options</div>
+            <h2 class="card-title">What could you buy</h2>
+            <div class="card-body">
+              <div class="step-list">
+                <div class="step">
+                  <div class="step-title">Remove the valvecover</div>
+                  <div class="step-body">
+                    This is what I purchased, no issues when I installed them
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">Cheap ones</div>
+                  <div class="step-body">
+                    It wouldn't be the first time I ran dirt cheap headers on a car with 0 fitment issues or problems for years on end. Decide your risk level
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">
+                    Catted aftermarket headers
+                  </div>
+                  <div class="step-body">
+                    Just look at these prices. Good luck
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">S54 headers
+                  </div>
+                  <div class="step-body">
+                    I've seen a few people claim these bolt right in but have yet to verify this. I personally would like to run this if it's possible
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="link-row">
+                <a class="chip-link" href="job-coilovers.html"><span class="icon">🔧</span><span>Detailed job page</span></a>
+                <a class="chip-link" href="torque-specs.html"><span class="icon">📌</span><span>Torque specs</span></a>
+                <a class="chip-link" href="troubleshooting-index.html"><span class="icon">🚨</span><span>Troubleshooting</span></a>
+              </div> -->
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">My thoughts on this</div>
+            <!-- <h2 class="card-title">What to document after</h2> -->
+            <div class="card-body">
+              If you are going to track the car do it. Adds some sound and with a tune you'll notice a power bump. For my e91 having this,
+              3 stage intake, and milvs I could keep up with e36 m3's fairly easily on the straights.
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT -->
+        <aside class="sidebar">
+            <section class="card">
+                <h2 class="card-title-small">Meta info</h2>
+                <ul class="spec-list">
+                  <li><strong>Goal:</strong> Increased Power</li>
+                  <li><strong>Difficulty:</strong> Medium</li>
+                  <li><strong>Approx Time:</strong> 6-8 hours</li>
+                  <li><strong>Follow-up:</strong> Tune required</li>
+                </ul>
+            </section>
+          <section class="card">
+            <h2 class="card-title-small">At a glance</h2>
+            <ul class="spec-list">
+              <li><strong>Category:</strong> Engine</li>
+              <li><strong>Best for:</strong> Power</li>
+              <li><strong>Requires:</strong> Moderate skill to install</li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title-small">Links</h2>
+            <ul class="mini-links">
+              <li>
+                <a href="https://roundelwerk.com/products/bmw-n52-performance-header" target="_blank">Remove the valvecover</a></li>
+                <li>
+                  <a href="https://www.google.com/search?q=bmw+n52+headers" target="_blank">Cheap ones</a></li>
+                <li>
+                  <a href="https://afepower.com/afe-power-48-36307-1-twisted-steel-header-304-stainless-steel-w-cat?" target="_blank">
+                    Catted aftermarket headers
+                    </a></li>
+                <li>
+                  <a href="https://www.ebay.com/sch/i.html?_nkw=s54+headers" target="_blank">
+                    S54 headers
+                  </a>
+                </li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title-small">Tags</h2>
+            <div class="tag-cloud">
+              <span class="tag">Internal Engine modifications</span>
+              <span class="tag">Power</span>
+            </div>
+          </section>
+
+          <!-- <section class="card">
+            <h2 class="card-title-small">Your chassis profile</h2>
+            <div class="tag-cloud">
+              <span class="tag">Chassis: E9x (example)</span>
+              <span class="tag">Engine: N52/N54/B58…</span>
+              <span class="tag">Use: Daily / canyon / track</span>
+            </div>
+          </section> -->
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>
