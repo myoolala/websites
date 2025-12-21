@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Oil Thermostats – Modification | BMW 3 Series Docs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-logo {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      background: radial-gradient(circle, #111827, #020617);
+    }
+    .brand-text { display: flex; flex-direction: column; }
+    .brand-text span:first-child { font-weight: 600; font-size: 1.05rem; }
+    .brand-text span:last-child { font-size: 0.8rem; color: var(--text-muted); }
+
+    nav {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+    nav a {
+      padding: 8px 14px; border-radius: 999px;
+      color: var(--text-muted); border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), transform var(--transition-fast);
+    }
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Breadcrumb / Page header */
+    .breadcrumb {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb a { color: var(--text-muted); }
+    .breadcrumb a:hover { color: var(--accent); }
+
+    .mod-header { 
+        margin-bottom: 18px; 
+        justify-content: flex-start;
+    }
+    .mod-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .mod-title {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 8px;
+    }
+    .mod-title span.highlight { color: var(--accent); }
+    .mod-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Layout */
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.3fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* Left content */
+    .main { display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 16px;
+    }
+    .card-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .card-title { font-size: 1rem; margin-bottom: 6px; }
+    .card-body {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .chip-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.96);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+                  transform var(--transition-fast), color var(--transition-fast);
+    }
+    .chip-link span.icon { font-size: 0.9rem; color: var(--accent); }
+    .chip-link:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Steps */
+    .step-list { display: flex; flex-direction: column; gap: 10px; counter-reset: step; margin-top: 10px; }
+
+    .step {
+      position: relative;
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      padding: 12px 12px 10px 40px;
+    }
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 11px;
+      top: 12px;
+      width: 20px; height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+      color: #f9fafb;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 1);
+    }
+    .step-title { font-size: 0.92rem; font-weight: 500; margin-bottom: 4px; }
+    .step-body { font-size: 0.88rem; color: var(--text-muted); }
+    .step-note {
+      margin-top: 6px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px dashed rgba(96, 165, 250, 0.65);
+      background: rgba(15, 23, 42, 0.95);
+      font-size: 0.8rem;
+      color: #bfdbfe;
+    }
+
+    /* Right sidebar (sticky) */
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card-title-small {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .spec-list {
+      list-style: none;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .spec-list li strong { color: var(--text-main); font-weight: 500; }
+
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.78rem; }
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+    }
+
+    .mini-links { list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; }
+    .mini-links a { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); padding: 4px 0; }
+    .mini-links a span.icon { color: var(--accent); }
+    .mini-links a:hover { color: var(--text-main); }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      header { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 780px) {
+      .page { padding-inline: 14px; }
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">E9X</div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>Modification</span>
+        </div>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+      </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+          <a href="../../../">Home</a>
+          <span>›</span>
+          <a href="../../">General Information</a>
+          <span>›</span>
+          <a href="../">Modifications</a>
+          <span>›</span>
+          <span>Oil Thermostats</span>
+        </div>
+
+      <header class="mod-header">
+        <div class="mod-kicker">Modification · N52 Engines</div>
+        <h1 class="mod-title">
+          Oil Thermostats
+        </h1>
+      </header>
+
+      <section class="layout">
+        <!-- LEFT -->
+        <div class="main">
+          <section class="card">
+            <div class="card-kicker">Overview</div>
+            <h2 class="card-title">What this mod is</h2>
+            <div class="card-body">
+              So if you run an n54, n55, s55, or sometimes an n52 there is a thermostat for the oil cooler. This is to maintain a high enough temperature evaporate the water in the oil
+              and run the oil at the designed temperature. There options though for other thermostats
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">Why do it</div>
+            <h2 class="card-title">Benefits & tradeoffs</h2>
+            <div class="card-body">
+              So the factory thermostat starts to open at 210° and fully opens at 230°. For track driving this might not be ideal as the time you get before oil cooling starts and
+              potential overheating can be short. Lowering the temperature to open the cooling circuit can help but it will depend the oil cooler system.
+              <br/>
+              <br/>
+              To add to that the factory thermostat is a known restriction for oil flow.
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">Planning</div>
+            <h2 class="card-title">What to decide before you buy/install</h2>
+            <div class="card-body">
+                This really depends what oil cooler you have in your car. I tested running an open thermostat, link on the side, with the CSF oil cooler and never saw above 170° driving
+                around town. That's too low for a daily but I had a giant oil cooler to it made sense. That being said, to get a higher flow thermostat you would need either a new 
+                thermostat housing or to run an inline thermostat.
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">Oil Thermostat Options</div>
+            <h2 class="card-title">What could you buy</h2>
+            <div class="card-body">
+              <div class="step-list">
+                <div class="step">
+                  <div class="step-title">Mosselman Oil Thermostat</div>
+                  <div class="step-body">
+                    This is supposed to flow more from what I read and lowers the temp to fully open by 20°C.
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">335i factory oil cooler</div>
+                  <div class="step-body">
+                    This is the other factory option which you can of course just go to a junkyard and grab all the parts for. This one will work better on track than the 330i cooler
+                    as the airflow will trump the coolant. The part that sucks here is installation requires remove the bumper but it's not that much work in reality. No idea how well
+                    these perform on track.
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">
+                    Turner thermostat housing
+                  </div>
+                  <div class="step-body">
+                    Same as the mosselman except it uses a factory style thermostat. This one opens 40°C lower than stock
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">Lower temperature thermostat
+                  </div>
+                  <div class="step-body">
+                    This is just a replacement thermostat for the factory housing. By far one of the easier swaps and opens at 70°C
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">Thermostat bypass
+                  </div>
+                  <div class="step-body">
+                    There is also the option to just remove the thermostat from the housing. This just locks it open. Ignore what ECS claims about it, that's if you run the factory
+                    oil cooler I think....
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">Thermostat housing delete
+                  </div>
+                  <div class="step-body">
+                    There is of course the option to fully delete the housing to for the highest potential flow
+                  </div>
+                </div>
+
+                <div class="step">
+                  <div class="step-title">External thermostat
+                  </div>
+                  <div class="step-body">
+                    And finally, there is the option to delete the thermostat and then run an inline one for the high possible flow with a thermostat. If you plan to run an accusump,
+                    this is the route I would go. Or plumb into one of the lines on top of the factory thermostat
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="link-row">
+                <a class="chip-link" href="job-coilovers.html"><span class="icon">🔧</span><span>Detailed job page</span></a>
+                <a class="chip-link" href="torque-specs.html"><span class="icon">📌</span><span>Torque specs</span></a>
+                <a class="chip-link" href="troubleshooting-index.html"><span class="icon">🚨</span><span>Troubleshooting</span></a>
+              </div> -->
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-kicker">My thoughts on this</div>
+            <!-- <h2 class="card-title">What to document after</h2> -->
+            <div class="card-body">
+              This one is more nuanced as it depends the goal. I plan to go accusump so I will be swapping out the who housing on my car.
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT -->
+        <aside class="sidebar">
+            <section class="card">
+                <h2 class="card-title-small">Meta info</h2>
+                <ul class="spec-list">
+                  <li><strong>Goal:</strong> Increased Oil cooling</li>
+                  <li><strong>Difficulty:</strong> Medium</li>
+                  <li><strong>Approx Time:</strong> 2-16 hours</li>
+                  <li><strong>Follow-up:</strong> None</li>
+                </ul>
+            </section>
+          <section class="card">
+            <h2 class="card-title-small">At a glance</h2>
+            <ul class="spec-list">
+              <li><strong>Category:</strong> Engine</li>
+              <li><strong>Best for:</strong> Oil Cooling</li>
+              <li><strong>Requires:</strong> Moderate skill to install</li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title-small">Links</h2>
+            <ul class="mini-links">
+              <li>
+                <a href="https://www.turnermotorsport.com/p-4621131-mosselman-billet-oil-thermostat-n54" target="_blank">Mosselman oil thermostat</a></li>
+                <li>
+                  <a href="https://www.ecstuning.com/b-turner-motorsport-parts/n54-n55-billet-oil-cooler-housing/008731la01kt/" target="_blank">Turner thermostat</a></li>
+                <li>
+                  <a href="https://www.turnermotorsport.com/p-30031507-n54n55-low-temp-oil-thermostat-kit-70c/" target="_blank">
+                    Low temp thermostat
+                    </a></li>
+                    <li>
+                      <a href="https://www.ecstuning.com/b-ftp-motorsport-parts/n54-n55-lowo-temp-thermostat-parts/sg84006~ftp/" target="_blank">
+                        Thermostat delete
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.bimmerworld.com/Cooling/Oil-Coolers/Vargas-Oil-Cooler-Block-Off-Plate-N54-135i-335i-535i.html" target="_blank">
+                        Thermostat housing delete
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.improvedracing.com/oil-thermostats/transmission-thermostats/high-flow-engine-transmission-oil-cooler-thermostat.html" target="_blank">
+                        External thermostat
+                      </a>
+                    </li>
+            </ul>
+          </section>
+
+          <section class="card">
+            <h2 class="card-title-small">Tags</h2>
+            <div class="tag-cloud">
+              <span class="tag">Internal Engine modifications</span>
+              <span class="tag">Power</span>
+            </div>
+          </section>
+
+          <!-- <section class="card">
+            <h2 class="card-title-small">Your chassis profile</h2>
+            <div class="tag-cloud">
+              <span class="tag">Chassis: E9x (example)</span>
+              <span class="tag">Engine: N52/N54/B58…</span>
+              <span class="tag">Use: Daily / canyon / track</span>
+            </div>
+          </section> -->
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>
