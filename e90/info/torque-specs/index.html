@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Torque Sepcifications | BMW 3 Series Docs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg-main: #05070a;
+      --bg-elevated: #10131a;
+      --accent: #4da6ff;
+      --accent-soft: rgba(77, 166, 255, 0.15);
+      --text-main: #f5f7fa;
+      --text-muted: #9ba3b5;
+      --border-subtle: #252a36;
+      --card-radius: 16px;
+      --transition-fast: 0.2s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #02040a 40%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      width: 100%;
+    }
+
+    /* Header / Nav */
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background: radial-gradient(circle, #111827, #020617);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-text span:first-child {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .brand-text span:last-child {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.95rem;
+    }
+
+    nav a {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      transition: background var(--transition-fast), color var(--transition-fast),
+                  border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    nav a:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    nav a.active {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    /* Breadcrumb / header */
+
+    .breadcrumb {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--text-muted);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .info-header {
+      margin-bottom: 20px;
+    }
+
+    .info-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .info-title {
+      font-size: clamp(1.9rem, 3vw, 2.3rem);
+      margin-bottom: 8px;
+    }
+
+    .info-title span.highlight {
+      color: var(--accent);
+    }
+
+    .info-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .info-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Layout */
+
+    .info-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.3fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* LEFT: expandable cards */
+
+    .info-main {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    details.section-card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      overflow: hidden;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+                  background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    details.section-card[open] {
+      border-color: rgba(96, 165, 250, 0.9);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.65);
+      background: rgba(15, 23, 42, 0.98);
+      transform: translateY(-1px);
+    }
+
+    details.section-card summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      outline: none;
+    }
+
+    details.section-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .section-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .section-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      font-size: 1rem;
+    }
+
+    .section-icon {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .section-chevron {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: transform var(--transition-fast), color var(--transition-fast);
+    }
+
+    details.section-card[open] .section-chevron {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    .section-body {
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px solid rgba(37, 42, 54, 0.9);
+      color: var(--text-muted);
+    }
+
+    .section-description {
+      margin-bottom: 8px;
+    }
+
+    .link-list {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .link-list li a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 0;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      transition: color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .link-list li a span.icon {
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .link-list li a:hover {
+      color: var(--text-main);
+      transform: translateX(2px);
+    }
+
+    /* RIGHT: sticky sidebar */
+
+    .info-sidebar {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: var(--card-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 12px 14px;
+    }
+
+    .card-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.78rem;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+    }
+
+    .note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .quick-links {
+      list-style: none;
+      font-size: 0.84rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .quick-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      padding: 4px 0;
+    }
+
+    .quick-links a span.icon {
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .quick-links a:hover {
+      color: var(--text-main);
+    }
+
+    /* Footer */
+
+    footer {
+      margin-top: auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 780px) {
+      .page {
+        padding-inline: 14px;
+      }
+
+      .info-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .info-sidebar {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">E9x</div>
+        <div class="brand-text">
+          <span>BMW 3 Series Docs</span>
+          <span>Reference links</span>
+        </div>
+      </div>
+      <nav>
+        <a href="../../">Home</a>
+        <!-- <a href="build.html">Car Build</a>
+        <a href="info.html">Platform Info</a>
+        <a href="resources.html" class="active">Resources</a>
+        <a href="builds-stories.html">Builds &amp; Stories</a> -->
+      </nav>
+    </header>
+
+    <main>
+      <div class="breadcrumb">
+        <a href="../../">Home</a>
+        <span>›</span>
+        <a href="../">General information</a>
+        <span>›</span>
+        <span>Torque Specifications</span>
+      </div>
+
+      <header class="info-header">Torque Specifications
+        <div class="info-kicker">Modifications</div>
+        <h1 class="info-title">
+          <span class="highlight">Torque Specifications</span> for the e9x.
+        </h1>
+        <!-- <div class="info-meta">
+          <span class="info-pill">Expandable sections</span>
+          <span class="info-pill">Easy link lists</span>
+        </div> -->
+      </header>
+
+      <section class="info-layout">
+        <!-- LEFT: expandable cards -->
+        <div class="info-main">
+
+          <details id="mods" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Engine</div>
+                <h2 class="section-title">N52</h2>
+              </div>
+              <span class="section-chevron">›</span>
+            </summary>
+            <div class="section-body">
+
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Meta Info</th>
+                    <th>Description</th>
+                    <th>First torque</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td><td>Oil drain plug</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil filter cap to housing</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Sparkplug</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Sparkplug</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <!-- <tr>
+                    <td>M10</td><td>Camshaft adjustment mounting bolt</td><td>15ftlb</td><td>20</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Cylinder head bolts 1-10 T60</td><td>22ftlb</td><td>30</td><td>90</td><td>90</td><td>45</td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Camshaft adjustment, VANOS</td><td>15ftlb</td><td>20</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Starter to bell housing, the long one</td><td>15ftlb</td><td>20</td><td>180</td><td></td><td></td>
+                  </tr> -->
+                  <tr>
+                    <td></td><td>Accoustic cover-to-valve cover</td><td>36inlb</td><td>4</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Camshaft bearing cap bolt</td><td>72inlb</td><td>8</td><td>60</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Camshaft intake bearing cap</td><td>84inlb</td><td>9</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Chain drive module to cylinder head</td><td>72inlb</td><td>8</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Chain guide rail to cylinder block</td><td>15ftlb</td><td>20</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Chain guide rail to cylinder head</td><td>10ftlb</td><td>14</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Chain cover plugs</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Chain tensioner to cylinder head</td><td>37ftlb</td><td>50</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Crankshaft pulley hub bolt</td><td>74ftlb</td><td>100</td><td>360</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>N52</td><td>Crankshaft vibration damper bolt</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>N52k</td><td>Crankshaft vibration damper bolt</td><td>26ftlb</td><td>35</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M7</td><td>Cylinder head bolt</td><td>60inlb</td><td>7</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M9</td><td>Steel Cylinder head bolt</td><td>22ftlb</td><td>30</td><td>90</td><td>90</td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M9</td><td>Alluminum Cylinder head bolt</td><td>84inlb</td><td>10</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Cylinder head bolt</td><td>22ftlb</td><td>30</td><td>90</td><td>90</td><td>45</td>
+                  </tr>
+                  <tr>
+                    <td>M6</td><td>Valve cover bolts</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M7</td><td>Steel Valve cover bolts</td><td>132inlb</td><td>15</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M7</td><td>N52 Allumimum Valve cover bolts</td><td>60inlb</td><td>7</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M7</td><td>N52k Alluminum Valve cover bolts</td><td>84inlb</td><td>9</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Driveplate bolts</td><td>96ftlb</td><td>130</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Engine mount to subframe</td><td>21ftlb</td><td>28</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Engine mount to subframe</td><td>41ftlb</td><td>56</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Engine mount to engine support arm</td><td>41ftlb</td><td>56</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Engine support arm to engine</td><td>18ftlb</td><td>25</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Flywheel bolt</td><td>89ftlb</td><td>120</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Front subframe bolts</td><td>35ftlb</td><td>47</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Front subframe bolts</td><td>77ftlb</td><td>105</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil level sensor</td><td>84inlb</td><td>9</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil deflector to lower crank case</td><td>36inlb</td><td>4</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil filter cap to housing</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Oil filter housing and pipes on crankcase</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M20</td><td>Oil filter housing and pipes on crankcase</td><td>30ftlb</td><td>40</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil pressure switch</td><td>15ftlb</td><td>2</td><td>16</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil pump pick-up</td><td>36inlb</td><td>4</td><td>100</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil pump sprocket</td><td>15ftlb</td><td>20</td><td>45</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8x123mm</td><td>Oil pump to lower crankcase</td><td>84inlb</td><td>10</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8x31 or 37mm</td><td>Oil pump to lower crankcase</td><td>84inlb</td><td>10</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil sprayer nozzles</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Positioning motor to cylinder head bolts</td><td>36inlb</td><td>4</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Oil pan drain bolt</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8 x 24 or 26mm</td><td>Oil pan bolt</td><td>72inlb</td><td>8</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8 x 92 or 112mm</td><td>Oil pan bolt</td><td>72inlb</td><td>8</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Strut tower supports</td><td>30ftlb</td><td>40</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Strut tower supports</td><td>74ftlb</td><td>100</td><td>100</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Tranmission cover to plate to crankcase bolts</td><td>36inlb</td><td>4</td><td>45</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic eccentric shaft bearing to cap to cylinder head bolt</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic eccentric shaft stop screw to cylinder head bolt</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic servo to cylinder head bolt</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic servo to valve cover</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic servo guide block to cylinder head</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic oil spray nozzle to gate</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Valvetronic servo return spring to cylinder head</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Vanos adjustment unit to camshafts</td><td>15ftlb</td><td>20</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Vanos check valve to cylinder head</td><td>120inlb</td><td>13</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Vanos solenoid valve</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rod cap bolt</td><td>15ftlb</td><td>20</td><td>120</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>N52 Bed plate bolts</td><td>84inlb</td><td>10</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>N52 Bed plate bolts</td><td>132inlb</td><td>15</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>N52K Bed plate bolts</td><td>72inlb</td><td>8</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10x100mm</td><td>N52K Bed plate bolts</td><td>15ftlb</td><td>20</td><td>70</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10x27 and 41mm</td><td>N52K Bed plate bolts</td><td>132inlb</td><td>15</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Main bearing cap bolt</td><td>15</td><td>20</td><td>70</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8 x 52mm</td><td>AC compressor mounting bolts</td><td>84inlb</td><td>10</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8 x 87mm</td><td>AC compressor mounting bolts</td><td>84inlb</td><td>10</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Water pump mounting bolts</td><td>84inlb</td><td>10</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Coolant temp sensor</td><td>120inlb</td><td>13</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Thermostat cover bolts</td><td>80inlb</td><td>9</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Thermostat housing bolts</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Cam position sensor bolt</td><td>60inlb</td><td>7</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Crank position sensor bolt</td><td>24inlb</td><td>3</td><td>45</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M6</td><td>Intake manifold to head</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M7</td><td>Intake manifold to head</td><td>132inlb</td><td>15</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Intake manifold to head</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Alternator mount bolt and nut</td><td>84inlb</td><td>10</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>Valeo</td><td>Alternator pulley retaining bolt</td><td>55ftlb</td><td>75</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>Bosch</td><td>Alternator pulley retaining bolt</td><td>48ftlb</td><td>65</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10x85mm</td><td>Starter bolt</td><td>15ftlb</td><td>20</td><td>180</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10x30mm</td><td>Starter bolt</td><td>15ftlb</td><td>20</td><td>90</td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+          </details>
+
+          <details id="fuel" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Fuel system</div>
+                <h2 class="section-title">N52</h2>
+              </div>
+              <div>
+                
+                <span class="section-chevron">›</span>
+              </div>
+            </summary>
+            <div class="section-body">
+
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Fastener Diameter</th>
+                    <th>Description</th>
+                    <th>First torque ft-lb</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td><td>Fuel rail to intake mount bolts</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details id="fuel" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Exhaust</div>
+                <h2 class="section-title">N52</h2>
+              </div>
+              <div>
+                
+                <span class="section-chevron">›</span>
+              </div>
+            </summary>
+            <div class="section-body">
+
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Fastener Diameter</th>
+                    <th>Description</th>
+                    <th>First torque</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>M6</td><td>Exhaust manifold nut</td><td>84inlb</td><td>10</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M7</td><td>Exhaust manifold nut</td><td>15ftlb</td><td>20</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Exhaust manifold nut</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details id="steering" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Steering</div>
+                <!-- <h2 class="section-title">N52</h2> -->
+              </div>
+              <div>
+                
+                <span class="section-chevron">›</span>
+              </div>
+            </summary>
+            <div class="section-body">
+
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Fastener Diameter</th>
+                    <th>Description</th>
+                    <th>First torque</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td><td>Lateral accel sensor</td><td>72inlb</td><td>8</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Power steering pipe union bolt</td><td>108inlb</td><td>12</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M14</td><td>Power steering pipe union bolt</td><td>26ftlb</td><td>35</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M16</td><td>Power steering pipe union bolt</td><td>30ftlb</td><td>40</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M18</td><td>Power steering pipe union bolt</td><td>33ftlb</td><td>45</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Power steering pump bolt</td><td>41ftlb</td><td>56</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Steering ujoint pinch bolt</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Steering Wheel</td><td>46ftlb</td><td>63</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Tie rod clamp bolt</td><td>30ftlb</td><td>40</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Tie rod to steering rack</td><td>81ftlb</td><td>110</td><td></td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details id="mods" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Suspension</div>
+                <h2 class="section-title">M and non M options</h2>
+              </div>
+              <div>
+                
+                <span class="section-chevron">›</span>
+              </div>
+            </summary>
+            <div class="section-body">
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Meta info</th>
+                    <th>Description</th>
+                    <th>First torque</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>M10</td><td>Strut tower brace to strut tower</td><td>30ftlb</td><td>40</td><td>60</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Front sway bar endlink nut</td><td>43ftlb</td><td>58</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Front sway bar bracket mounting nut</td><td>21ftlb</td><td>28</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Front Control arm balljoint nut</td><td>122ftlb</td><td>165</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>8.8 M12</td><td>Front control arm to subframe nut</td><td>50ftlb</td><td>68</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>10.9 M12</td><td>Front control arm to subframe nut</td><td>74ftlb</td><td>100</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Front wheel bearing bolt</td><td>81ftlb</td><td>110</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Strut nut</td><td>47ftlb</td><td>64</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Top hat to body nut</td><td>25ftlb</td><td>34</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear swaybar endlink nut</td><td>15ftlb</td><td>21</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear swaybar bolt</td><td>15ftlb</td><td>21</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear swaybar nut</td><td>43ftlb</td><td>58</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear Lower control, camber, arm to hub</td><td>122ftlb</td><td>165</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear Lower control, camber, arm to subframe</td><td>122ftlb</td><td>165</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear Control arm to hub bolt</td><td>74ftlb</td><td>100</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear Control arm to subframe bolt</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Rear shock upper mount nut</td><td>20ftlb</td><td>27</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M14</td><td>Rear shock upper mount nut</td><td>27ftlb</td><td>37</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Rear shock mount mount bolt</td><td>44ftlb</td><td>60</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Rear shock mount mount bolt</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear shock mount mount nut</td><td>27ftlb</td><td>37</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear subframe mount bolts</td><td>80ftlb</td><td>108</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Tow arm to hub</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Tow arm to subframe nut</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Traction strut to hub bolt</td><td>74ftlb</td><td>100</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Traction strut to hub nut</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Trailer arm to hub bolt</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Trailer arm to subframe bolt</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details id="mods" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Braking</div>
+                <!-- <h2 class="section-title">Upgrades</h2> -->
+              </div>
+              <div>
+                
+                <span class="section-chevron">›</span>
+              </div>
+            </summary>
+            <div class="section-body">
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Fastener Diameter</th>
+                    <th>Description</th>
+                    <th>First torque</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td><td>ABS pressure sensor to master cylinder</td><td>168inlb</td><td>19</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Wheel speed sensor</td><td>72inlb</td><td>8</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Brake rotor retaining bolt</td><td>144inlb</td><td>16</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Brake hose</td><td>156inlb</td><td>17</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Brake hose</td><td>168inlb</td><td>12</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>Allen key style</td><td>Front guide pins</td><td>22ftlb</td><td>30</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Front brake bracket bolts</td><td>81ftlb</td><td>110</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Master cylinder retaining nuts</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>Allen key style</td><td>Rear guide pins</td><td>22ftlb</td><td>30</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Rear brake bracket bolts</td><td>48ftlb</td><td>65</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Rear brake bracket bolts</td><td>81ftlb</td><td>110</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Brake booster mount bolts</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Vacuum pump drive gear</td><td>48ftlb</td><td>65</td><td></td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details id="mods" class="section-card">
+            <summary>
+              <div class="section-left">
+                <div class="section-kicker">Drive train</div>
+                <h2 class="section-title">Transmission and differentials</h2>
+              </div>
+              <div>
+                
+                <span class="section-chevron">›</span>
+              </div>
+            </summary>
+            <div class="section-body">
+
+              <table aria-label="6 column by 10 row reference table">
+                <thead>
+                  <tr>
+                    <th>Fastener Diameter</th>
+                    <th>Description</th>
+                    <th>First torque</th>
+                    <th>First torque Nm</th>
+                    <th>Second torque °</th>
+                    <th>Third torque °</th>
+                    <th>Fourth torque °</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td><td>Wheel Torque</td><td>89ftlb</td><td>120</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Rear differential plug</td><td>44</td><td>60</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Transmission cross member to body</td><td>15ftlb</td><td>21</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Transmission cross member to body</td><td>31ftlb</td><td>42</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Transmission mount to transmission</td><td>15ftlb</td><td>21</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Transmission mount to transmission</td><td>31ftlb</td><td>42</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Transmission to engine bolts</td><td>18ftlb</td><td>25</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Transmission to engine bolts</td><td>36ftlb</td><td>49</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Transmission to engine bolts</td><td>55ftlb</td><td>74</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Transmission output flange to shaft nut</td><td>125ftlb</td><td>170</td><td>Fully loosen</td><td>89ftlb</td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Reverse switch</td><td>15ftlb</td><td>21</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Clutch master cylinder nuts</td><td>80inlb</td><td>9</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Pressure plate to flywheel</td><td>132inlb</td><td>15</td><td>90°</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Clutch slave cylinder</td><td>16ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M24</td><td>Rear axle hub nut</td><td>185ftlb</td><td>250</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M27</td><td>Rear axle hub nut</td><td>310ftlb</td><td>420</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M8</td><td>Rear axle to differential</td><td>39ftlb</td><td>52</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M10</td><td>Rear axle to differential</td><td>52ftlb</td><td>70</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>M12</td><td>Rear axle to differential</td><td>89ftlb</td><td>120</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Differential to subframe, forward bolts</td><td>74ftlb</td><td>100</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Differential to subframe, rearward bolt</td><td>122ftlb</td><td>165</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>8.8 M10</td><td>Driveshaft to tranmission</td><td>48ftlb</td><td>65</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>10.9 M10</td><td>Driveshaft to tranmission</td><td>64ftlb</td><td>87</td><td></td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>With ribbed bolt</td><td>Driveshaft to diffetential via u-joint</td><td>30ftlb</td><td>40</td><td>45</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td>Without ribbed bolt</td><td>Driveshaft to diffetential via u-joint</td><td>15ftlb</td><td>22</td><td>90</td><td></td><td></td>
+                  </tr>
+                  <tr>
+                    <td></td><td>Driveshaft center support bearing</td><td>15ftlb</td><td>22</td><td></td><td></td><td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </div>
+
+        <!-- RIGHT: sidebar -->
+        <aside class="info-sidebar">
+          <!-- <section class="card">
+            <h2 class="card-title">Your chassis profile</h2>
+            <div class="tag-cloud">
+              <span class="tag">Chassis: E9x (example)</span>
+              <span class="tag">Engine: N52 / N54 / B58…</span>
+              <span class="tag">Use: Daily / canyon / track</span>
+              <span class="tag">Trans: Manual / auto</span>
+            </div>
+            <p class="note">
+              Swap these tags with your exact spec so you always know what your links
+              and notes are written for.
+            </p>
+          </section> -->
+
+          <section class="card">
+            <h2 class="card-title">Cross-links</h2>
+            <ul class="quick-links">
+              <li>
+                <a href="../../builds/">
+                  <span class="icon">📒</span>
+                  <span>Main build page</span>
+                </a>
+              </li>
+              <!-- <li>
+                <a href="builds-stories.html">
+                  <span class="icon">📆</span>
+                  <span>Builds, jobs &amp; stories</span>
+                </a>
+              </li> -->
+              <!-- <li>
+                <a href="job-oil-change.html">
+                  <span class="icon">🔧</span>
+                  <span>Recent job example</span>
+                </a>
+              </li> -->
+              <li>
+                <a href="../../resources/">
+                  <span class="icon">🛣</span>
+                  <span>Relevant resources</span>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    Please feel free to reach out for updates or information to add. This is meant to not be a forum, just a place of documentation
+  </footer>
+</body>
+</html>
