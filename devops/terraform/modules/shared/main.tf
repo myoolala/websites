@@ -14,7 +14,9 @@ module "vpc" {
   name      = "opensource-repo"
   public    = true
   ipv4_cidr = "172.31.0.0/16"
-  # ipv6_cidr = "2001:db8:1234:1a00::/56"
+  ipv6_conf = {
+    border_group = "us-east-1"
+  }
   ingress_subnets = [{
     ipv4_cidr = "172.31.0.0/27"
     az        = "us-east-1a"
@@ -90,6 +92,10 @@ module "ui_lambda" {
     prefix     = "/personal/"
     enable_spa = false
   }
+  metrics_config = {
+    enabled = true
+    namespace = "personal-sites"
+  }
 
   # sg_config = {
   #   create = true
@@ -100,6 +106,14 @@ module "ui_lambda" {
   # }
   vpc_config = null
   alb_tg_arn = module.ingress.tg_arns[0]
+}
+
+output "domain" {
+  value = var.domain
+}
+
+output "namespace" {
+  value = "personal-sites"
 }
 
 output "lb_dns_name" {

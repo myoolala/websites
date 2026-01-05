@@ -1,3 +1,7 @@
+include "providers" {
+  path = find_in_parent_folders("providers.hcl")
+}
+
 terraform {
   source = "${get_terragrunt_dir()}/../..//terraform/modules/website"
 }
@@ -36,33 +40,4 @@ remote_state {
     encrypt = true
     dynamodb_table = "terraform-state-lock"
   }
-}
-
-# Indicate what region to deploy the resources into
-generate "provider" {
-  path      = "provider.tf"
-  if_exists = "overwrite"
-  contents = <<EOF
-provider "aws" {
-  region              = "us-east-1"
-  default_tags {
-    tags = {
-      Environment = "peter"
-    }
-  }
-}
-
-terraform {
-  required_providers {
-    archive = {
-      source = "hashicorp/archive"
-      version = "2.7.1"
-   }
-   aws = {
-      source = "hashicorp/aws"
-      version = ">=6.0.0"
-   }
-  }
-}
-EOF
 }

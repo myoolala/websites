@@ -3,29 +3,33 @@ include "providers" {
 }
 
 terraform {
-  source = "${get_terragrunt_dir()}/../..//terraform/modules/website"
+  source = "${get_terragrunt_dir()}/../..//terraform/modules/metrics"
 }
 
 locals {
     region = "us-east-1"
-    secrets = yamldecode(sops_decrypt_file("secrets.yml"))
 }
 
 dependency "shared" {
   config_path = "../shared"
 }
 
+dependency "e90" {
+  config_path = "../e90"
+}
+
+dependency "resumes" {
+  config_path = "../resumes"
+}
+
 # Indicate the input values to use for the variables of the module.
 inputs = {
-  listener_arn = dependency.shared.outputs.listener_arn
-  code_bucket = dependency.shared.outputs.code_bucket
-  lb_dns_name = dependency.shared.outputs.lb_dns_name
-  priority = 101
-  group = "e90"
-  dns = {
-      hosted_zone = local.secrets.hosted_zone
-      domain = local.secrets.domain
-  }
+  namespace = dependency.shared.outputs.namespace
+  domains = [
+    dependency.shared.outputs.domain,
+    dependency.resumes.outputs.domain,
+    dependency.e90.outputs.domain
+  ]
 }
 
 remote_state {
@@ -36,7 +40,7 @@ remote_state {
   }
   config = {
     bucket = "state.petergrasso.com"
-    key    = "e90.state"
+    key    = "metrics.state"
     region = "us-east-1"
     encrypt = true
     dynamodb_table = "terraform-state-lock"

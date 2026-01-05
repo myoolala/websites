@@ -56,6 +56,10 @@ module "ui_lambda" {
     prefix     = "/${var.group}/"
     enable_spa = false
   }
+  metrics_config = {
+    enabled = true
+    namespace = "personal-sites"
+  }
 
   # sg_config = {
   #   create = true
