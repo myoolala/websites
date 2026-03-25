@@ -1,5 +1,5 @@
-include "providers" {
-  path = find_in_parent_folders("providers.hcl")
+include "terraform" {
+  path = find_in_parent_folders("terraform.hcl")
 }
 
 terraform {
@@ -26,6 +26,23 @@ inputs = {
       hosted_zone = local.secrets.hosted_zone
       domain = local.secrets.domain
   }
+}
+
+generate "provider" {
+  path      = "providers.tf"
+  if_exists = "overwrite"
+  contents = <<EOF
+provider "aws" {
+  region              = "us-east-1"
+  default_tags {
+    tags = {
+      Environment = "Personal"
+      Project = "Personal"
+      Billing = "WebsitesE90"
+    }
+  }
+}
+EOF
 }
 
 remote_state {

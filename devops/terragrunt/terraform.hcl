@@ -1,19 +1,8 @@
-
-
 # Indicate what region to deploy the resources into
-generate "provider" {
-  path      = "provider.tf"
+generate "terraform" {
+  path      = "terraform.tf"
   if_exists = "overwrite"
   contents = <<EOF
-provider "aws" {
-  region              = "us-east-1"
-  default_tags {
-    tags = {
-      Environment = "Personal"
-    }
-  }
-}
-
 terraform {
   required_providers {
     archive = {

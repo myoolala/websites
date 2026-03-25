@@ -1,5 +1,5 @@
-include "providers" {
-  path = find_in_parent_folders("providers.hcl")
+include "terraform" {
+  path = find_in_parent_folders("terraform.hcl")
 }
 
 terraform {
@@ -30,6 +30,23 @@ inputs = {
     dependency.resumes.outputs.domain,
     dependency.e90.outputs.domain
   ]
+}
+
+generate "provider" {
+  path      = "providers.tf"
+  if_exists = "overwrite"
+  contents = <<EOF
+provider "aws" {
+  region              = "us-east-1"
+  default_tags {
+    tags = {
+      Environment = "Personal"
+      Project = "Personal"
+      Billing = "WebsitesMetrics"
+    }
+  }
+}
+EOF
 }
 
 remote_state {
