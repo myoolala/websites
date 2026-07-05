@@ -84,9 +84,10 @@ module "ingress" {
 }
 
 module "athena_table" {
-  source = "github.com/myoolala/terraform-aws/modules//alb-logs-athena-table?ref=b829bc36105759d2df8f364c2fb7006a2e81f90e"
+  source = "github.com/myoolala/terraform-aws/modules//alb-logs-athena-table?ref=1adc59963e220d63158fea0e56a286645e35d595"
 
-  name                  = "test-alb-log-table"
+  name                  = "personal-sites-alb-logs"
+  database_name         = "personal-sites"
   alb_logs_bucket       = module.ingress.logs_bucket_name
   alb_logs_prefix       = ""
 }
@@ -148,4 +149,8 @@ output "default_tg_arn" {
 
 output "code_bucket" {
   value = module.code_bucket.id
+}
+
+output "athena" {
+  value = module.athena_table
 }
