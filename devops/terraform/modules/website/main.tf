@@ -47,7 +47,7 @@ resource "aws_lb_listener_rule" "this" {
 }
 
 module "ui_lambda" {
-  source = "github.com/myoolala/terraform-aws/modules//lambda-s3-ui?ref=main"
+  source = "github.com/myoolala/terraform-aws/modules//lambda-s3-ui?ref=273ea67fc8c49fa3a9f308d6a18de001ee661295"
 
   lambda_name = "petergrasso-${var.group}-proxy"
   config = {

@@ -61,7 +61,7 @@ resource "aws_route53_record" "cname" {
 }
 
 module "ingress" {
-  source = "github.com/myoolala/terraform-aws/modules//load-balancer?ref=main"
+  source = "github.com/myoolala/terraform-aws/modules//load-balancer?ref=b829bc36105759d2df8f364c2fb7006a2e81f90e"
 
   vpc_id  = module.vpc.vpc_id
   subnets = module.vpc.ingress_subnet_ids
@@ -79,11 +79,21 @@ module "ingress" {
     cert         = module.cert.arn
     target_type  = "lambda"
   }]
+
+  access_logs = {}
+}
+
+module "athena_table" {
+  source = "github.com/myoolala/terraform-aws/modules//alb-logs-athena-table?ref=b829bc36105759d2df8f364c2fb7006a2e81f90e"
+
+  name                  = "test-alb-log-table"
+  alb_logs_bucket       = module.ingress.logs_bucket_name
+  alb_logs_prefix       = ""
 }
 
 
 module "ui_lambda" {
-  source = "github.com/myoolala/terraform-aws/modules//lambda-s3-ui?ref=main"
+  source = "github.com/myoolala/terraform-aws/modules//lambda-s3-ui?ref=273ea67fc8c49fa3a9f308d6a18de001ee661295"
 
   lambda_name = "petergrasso-personal-proxy"
   config = {
