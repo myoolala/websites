@@ -22,13 +22,18 @@ dependency "resumes" {
   config_path = "../resumes"
 }
 
+dependency "dev-tools" {
+  config_path = "../dev-tools"
+}
+
 # Indicate the input values to use for the variables of the module.
 inputs = {
   namespace = dependency.shared.outputs.namespace
   domains = [
     dependency.shared.outputs.domain,
     dependency.resumes.outputs.domain,
-    dependency.e90.outputs.domain
+    dependency.e90.outputs.domain,
+    dependency.dev-tools.outputs.domain
   ]
 }
 

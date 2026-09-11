@@ -3,6 +3,11 @@ variable "hosted_zone" {
   description = "Hosted Zone ID to route traffic with"
 }
 
+variable "cert_domain" {
+  type = string
+  description = "record to tie the cert to"
+}
+
 variable "domain" {
   type = string
   description = "Default domain to deploy to"
@@ -47,7 +52,7 @@ module "code_bucket" {
 module "cert" {
   source = "github.com/myoolala/terraform-aws//modules/cert?ref=main"
 
-  domain      = "${var.domain}"
+  domain      = "${var.cert_domain}"
   hosted_zone = var.hosted_zone
   private     = false
 }

@@ -15,6 +15,7 @@ locals {
 inputs = {
     hosted_zone = local.secrets.hosted_zone
     domain = local.secrets.domain
+    cert_domain = local.secrets.cert_domain
 }
 
 remote_state {
@@ -28,7 +29,6 @@ remote_state {
     key    = "shared.state"
     region = "us-east-1"
     encrypt = true
-    dynamodb_table = "terraform-state-lock"
   }
 }
 
